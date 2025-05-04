@@ -11,6 +11,8 @@ namespace BikeManagementSystem.Models
         [MinLength(1)]
         public string Model { get; set; }
 
+        public int VendorId { get; set; }
+
         [Required]
         public int TypeId { get; set; }
 
@@ -24,6 +26,7 @@ namespace BikeManagementSystem.Models
         public int Durability { get; set; }
 
         public DateTime LastMaintenanceDate { get; set; }
+        public virtual Vendor Vendor { get; set; }
         public virtual BikeType Type { get; set; }
         public virtual Image Image { get; set; }
 
