@@ -11,6 +11,7 @@ namespace BikeManagementSystem.Models
         [MinLength(1)]
         public string Model { get; set; }
 
+        [Required]
         public int VendorId { get; set; }
 
         [Required]
