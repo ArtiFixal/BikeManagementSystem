@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35919.96 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeManagementSystemLib", "BikeManagementSystemLib\BikeManagementSystemLib.csproj", "{DD2FE8D6-D205-4E2D-AE19-E2BA8AC0F4FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD2FE8D6-D205-4E2D-AE19-E2BA8AC0F4FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD2FE8D6-D205-4E2D-AE19-E2BA8AC0F4FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD2FE8D6-D205-4E2D-AE19-E2BA8AC0F4FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD2FE8D6-D205-4E2D-AE19-E2BA8AC0F4FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F1A20C23-456F-4591-A3E8-6A3B66BAD1BC}
+	EndGlobalSection
+EndGlobal
