@@ -14,6 +14,8 @@ namespace BikeManagementSystem.Models
         [MinLength(1)]
         public string Name { get; set; }
 
+        public virtual ICollection<Bike> Bikes { get; set; }
+
         public BikeType(int id, string name): base(id)
         {
             Name = name;
