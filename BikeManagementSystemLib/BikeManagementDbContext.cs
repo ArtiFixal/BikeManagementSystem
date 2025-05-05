@@ -12,6 +12,7 @@ namespace BikeManagementSystemLib
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Maintenance> Maintenances { get; set; }
+        public DbSet<Client> Clients { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
