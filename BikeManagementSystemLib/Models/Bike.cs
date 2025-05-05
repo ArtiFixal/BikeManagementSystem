@@ -31,6 +31,8 @@ namespace BikeManagementSystem.Models
         public virtual BikeType Type { get; set; }
         public virtual Image Image { get; set; }
 
+        public Bike(string model, BikeType type, long imageId, bool isAvailable, int durability, DateTime lastMaintenanceDate) : this(0, model, type, imageId, isAvailable, durability, lastMaintenanceDate) { }
+
         public Bike(long id, string model, BikeType type, long imageId, bool isAvailable, int durability, DateTime lastMaintenanceDate): base(id)
         {
             Model = model;

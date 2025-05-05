@@ -17,6 +17,8 @@ namespace BikeManagementSystemLib.Models
 
         public virtual ICollection<Bike> Bikes { get; set; }
 
+        public Vendor(string name): this(0, name) { }
+
         public Vendor(long id,string name): base(id)
         {
             Name = name;
