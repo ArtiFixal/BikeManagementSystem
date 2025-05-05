@@ -11,6 +11,7 @@ namespace BikeManagementSystemLib
         public DbSet<BikeType> BikeTypes { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<Maintenance> Maintenances { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
@@ -32,6 +33,15 @@ namespace BikeManagementSystemLib
                 entity.HasOne(bike => bike.Image)
                 .WithMany(image => image.Bikes)
                 .HasForeignKey(bike => bike.ImageId);
+
+                entity.HasOne(bike => bike.LastMaintenance)
+                .WithOne(maintenance => maintenance.Bike)
+                .HasForeignKey<Bike>(bike=>bike.LastMaintenanceId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasMany(bike => bike.Maintenances)
+                .WithOne(Maintenance => Maintenance.Bike)
+                .HasForeignKey(bike => bike.BikeId);
             });
         }
     }

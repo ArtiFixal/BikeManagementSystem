@@ -24,21 +24,25 @@ namespace BikeManagementSystemLib.Models
         [Required]
         public int Durability { get; set; }
 
-        public DateTime LastMaintenanceDate { get; set; }
+        public long LastMaintenanceId { get; set; }
+
+        public virtual Maintenance LastMaintenance { get; set; }
         public virtual Vendor Vendor { get; set; }
         public virtual BikeType Type { get; set; }
         public virtual Image Image { get; set; }
 
-        public Bike(string model, BikeType type, long imageId, bool isAvailable, int durability, DateTime lastMaintenanceDate) : this(0, model, type, imageId, isAvailable, durability, lastMaintenanceDate) { }
+        public virtual ICollection<Maintenance> Maintenances { get; set; }
 
-        public Bike(long id, string model, BikeType type, long imageId, bool isAvailable, int durability, DateTime lastMaintenanceDate): base(id)
+        public Bike(string model, BikeType type, long imageId, bool isAvailable, int durability, long lastMaintenanceId) : this(0, model, type, imageId, isAvailable, durability, lastMaintenance) { }
+
+        public Bike(long id, string model, BikeType type, long imageId, bool isAvailable, int durability, long lastMaintenanceId): base(id)
         {
             Model = model;
             Type = type;
             ImageId = imageId;
             IsAvailable = isAvailable;
             Durability = durability;
-            LastMaintenanceDate = lastMaintenanceDate;
+            LastMaintenanceId = lastMaintenanceId;
         }
     }
 }
