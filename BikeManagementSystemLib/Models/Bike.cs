@@ -1,8 +1,6 @@
-﻿using BikeManagementSystemLib.Models;
-using System.ComponentModel.DataAnnotations;
-using System.Transactions;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace BikeManagementSystem.Models
+namespace BikeManagementSystemLib.Models
 {
     public class Bike: BaseEntity<long>
     {

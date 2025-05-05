@@ -1,12 +1,6 @@
-﻿using BikeManagementSystem;
-using BikeManagementSystem.Models;
-using BikeManagementSystemLib.Exceptions;
+﻿using BikeManagementSystemLib.Exceptions;
+using BikeManagementSystemLib.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BikeManagementSystemLib.Services
 {

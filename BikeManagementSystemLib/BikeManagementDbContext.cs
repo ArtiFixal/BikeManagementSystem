@@ -1,13 +1,7 @@
-﻿using BikeManagementSystem.Models;
-using BikeManagementSystemLib.Models;
+﻿using BikeManagementSystemLib.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BikeManagementSystem
+namespace BikeManagementSystemLib
 {
     public class BikeManagementDbContext : DbContext
     {

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace BikeManagementSystem.Models
+namespace BikeManagementSystemLib.Models
 {
     public class BikeType: BaseEntity<int>
     {
