@@ -77,7 +77,9 @@ namespace BikeManagementSystemLib.Services
 
         public virtual ID AddEntity(ET entity)
         {
-            return context.Add(entity).Entity.Id;
+            var toAdd=context.Add(entity);
+            context.SaveChanges();
+            return toAdd.Entity.Id;
         }
 
         public virtual ET EditEntity(ET entity)
