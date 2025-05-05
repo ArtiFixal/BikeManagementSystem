@@ -1,5 +1,6 @@
 ﻿using BikeManagementSystemLib.Exceptions;
 using BikeManagementSystemLib.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BikeManagementSystemLib.Services
 {
@@ -27,6 +28,15 @@ namespace BikeManagementSystemLib.Services
         public List<Bike> GetBikesReqiringMaintenance()
         {
             return entitySet.Where(bike => bike.Durability < 40)
+                .ToList();
+        }
+
+        public List<Bike> GetNotReturnedBikes()
+        {
+            return context.RentedBikes
+                .Where(rentedBike => rentedBike.ReturnDate.Equals(null))
+                .Include(rentedBike=>rentedBike.Bike)
+                .Select(rentedBike=>rentedBike.Bike)
                 .ToList();
         }
     }

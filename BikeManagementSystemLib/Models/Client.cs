@@ -22,6 +22,8 @@ namespace BikeManagementSystemLib.Models
         [StringLength(15)]
         public string PhoneNumber { get; set; }
 
+        public virtual ICollection<Rental> Rentals { get; set; }
+
         public Client(string identityNumber,string firstName, string lastName, string phoneNumber) : this(0, identityNumber, firstName, lastName, phoneNumber) { }
 
         public Client(long id,string identityNumber, string firstName, string lastName, string phoneNumber): base(id)
