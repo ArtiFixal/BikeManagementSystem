@@ -8,9 +8,7 @@ namespace BikeManagementSystemLib.Models
     /// <see cref="RentedBike"/>
     public class RentedBikeKey
     {
-        [Key]
         public long RentalId { get; set; }
-        [Key]
         public long BikeId { get; set; }
 
         public RentedBikeKey(long rentalId, long bikeId)

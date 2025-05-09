@@ -43,10 +43,14 @@ namespace BikeManagementSystemLib
                 .WithOne(maintenance => maintenance.Bike)
                 .HasForeignKey<Bike>(bike=>bike.LastMaintenanceId)
                 .OnDelete(DeleteBehavior.Cascade);
+            });
 
-                entity.HasMany(bike => bike.Maintenances)
-                .WithOne(Maintenance => Maintenance.Bike)
-                .HasForeignKey(bike => bike.BikeId);
+            modelBuilder.Entity<Maintenance>(entity => {
+                entity.Ignore(maintenance=>maintenance.Bike);
+                entity.HasOne(Maintenance => Maintenance.Bike)
+                .WithMany(bike => bike.Maintenances)
+                .HasForeignKey(bike => bike.BikeId)
+                .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Rental>(entity => {
@@ -59,13 +63,15 @@ namespace BikeManagementSystemLib
             });
 
             modelBuilder.Entity<RentedBike>(entity => {
+                entity.Ignore(bike => bike.Id);
+                entity.HasKey(bike => new { bike.RentalId, bike.BikeId });
                 entity.HasOne(rentedBike => rentedBike.Rental)
                 .WithMany(rental => rental.RentedBikes)
-                .HasForeignKey(rentedBike => rentedBike.Id.RentalId);
+                .HasForeignKey(rentedBike => rentedBike.RentalId);
 
                 entity.HasOne(rentedBike => rentedBike.Bike)
                 .WithMany(bike => bike.RentedBikes)
-                .HasForeignKey(rentedBike => rentedBike.Id.BikeId);
+                .HasForeignKey(rentedBike => rentedBike.BikeId);
             });
         }
     }
