@@ -41,7 +41,8 @@ namespace BikeManagementSystemLib
 
                 entity.HasOne(bike => bike.LastMaintenance)
                 .WithOne(maintenance => maintenance.Bike)
-                .HasForeignKey<Bike>(bike=>bike.LastMaintenanceId)
+                .HasForeignKey<Bike>(bike => bike.LastMaintenanceId)
+                .HasPrincipalKey<Maintenance>(maintenance=>maintenance.BikeId)
                 .OnDelete(DeleteBehavior.Cascade);
             });
 
@@ -50,7 +51,7 @@ namespace BikeManagementSystemLib
                 entity.HasOne(Maintenance => Maintenance.Bike)
                 .WithMany(bike => bike.Maintenances)
                 .HasForeignKey(bike => bike.BikeId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
             });
 
             modelBuilder.Entity<Rental>(entity => {
