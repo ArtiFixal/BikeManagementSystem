@@ -10,7 +10,7 @@ namespace BikeManagementSystemLib.Models
         public string Model { get; set; }
 
         [Required]
-        public int VendorId { get; set; }
+        public long VendorId { get; set; }
 
         [Required]
         public int TypeId { get; set; }
