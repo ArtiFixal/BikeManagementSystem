@@ -15,12 +15,14 @@ namespace BikeManagementSystemDesktop
         private BikeManagementDbContext context;
         private BikeServiceExtended bikeService;
         private VendorService vendorService;
+        private BikeTypeService typeService;
 
         public MainView(BikeManagementDbContext context)
         {
             this.context = context;
             bikeService = new BikeServiceExtended(context);
             vendorService = new VendorService(context);
+            typeService = new BikeTypeService(context);
             InitializeComponent();
             SetUpTables();
         }
@@ -46,11 +48,18 @@ namespace BikeManagementSystemDesktop
             vendorTable.Columns.Add("Name", "Name");
             vendorTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
+            // Type table
+            typeTable.Columns.Add("Id", "Id");
+            typeTable.Columns.Add("Name", "Name");
+            typeTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
             // Setup pages
             bikeTablePageNumber.Maximum = bikeService.GetPageCount(BikeService.DEFAULT_PAGE_SIZE) + 1;
-            vendorTablePageNumber.Maximum = vendorService.GetPageCount(BikeService.DEFAULT_PAGE_SIZE) + 1;
+            vendorTablePageNumber.Maximum = vendorService.GetPageCount(VendorService.DEFAULT_PAGE_SIZE) + 1;
+            typeTablePageNumber.Maximum = typeService.GetPageCount(BikeTypeService.DEFAULT_PAGE_SIZE) + 1;
             ChangeBikeTablePage(1);
             ChangeVendorTablePage(1);
+            ChangeTypeTablePage(1);
         }
 
         private void ChangeBikeTablePage(int page)
@@ -70,15 +79,33 @@ namespace BikeManagementSystemDesktop
         private void ChangeVendorTablePage(int page)
         {
             vendorTable.Rows.Clear();
-            vendorService.GetEntityPage(page, BikeService.DEFAULT_PAGE_SIZE).ForEach(vendor =>
+            vendorService.GetEntityPage(page, VendorService.DEFAULT_PAGE_SIZE).ForEach(vendor =>
             {
                 vendorTable.Rows.Add(vendor.Id, vendor.Name);
             });
         }
 
+        private void ChangeTypeTablePage(int page)
+        {
+            typeTable.Rows.Clear();
+            typeService.GetEntityPage(page, BikeTypeService.DEFAULT_PAGE_SIZE).ForEach(type =>
+            {
+                typeTable.Rows.Add(type.Id, type.Name);
+            });
+        }
+
         private delegate ID InsertSimpleEntity<ID>(string entityField);
 
-        private void AddSimpleEntity<ID>(string formName, DataGridView table, NumericUpDown pageInput, InsertSimpleEntity<ID> clickCallback)
+        /// <summary>
+        /// Common code for creating new entity with one field.
+        /// </summary>
+        /// 
+        /// <typeparam name="ID">Entity ID type</typeparam>
+        /// <param name="formTitle">Title displayed at form bar</param>
+        /// <param name="table">Where to add entity</param>
+        /// <param name="pageInput">Where to check for current page</param>
+        /// <param name="clickCallback">What will happen after form action button click</param>
+        private void AddSimpleEntity<ID>(string formTitle, DataGridView table, NumericUpDown pageInput, InsertSimpleEntity<ID> clickCallback)
         {
             SimpleEntityFrom form = new SimpleEntityFrom("Add new vendor", "Add");
             form.Owner = this;
@@ -96,11 +123,20 @@ namespace BikeManagementSystemDesktop
 
         private delegate void UpdateSimpleEntity<ID>(ID entityID, string updatedFieldValue);
 
-        private void EditSimpleEntity<ID>(string formName, DataGridView table, UpdateSimpleEntity<ID> clickCallback)
+        /// <summary>
+        /// Common code for editing entity with one field.
+        /// </summary>
+        /// 
+        /// <typeparam name="ID">Entity ID type</typeparam>
+        /// <param name="formTitle">Title displayed at form bar</param>
+        /// <param name="table">Where to look for selected rows</param>
+        /// <param name="clickCallback">What will happen after form 
+        /// action button click</param>
+        private void EditSimpleEntity<ID>(string formTitle, DataGridView table, UpdateSimpleEntity<ID> clickCallback)
         {
             ID entityID = (ID)table.SelectedRows[0].Cells[0].Value;
             string entityValue = (string)table.SelectedRows[0].Cells[1].Value;
-            SimpleEntityFrom form = new SimpleEntityFrom(formName, "Update", entityID);
+            SimpleEntityFrom form = new SimpleEntityFrom(formTitle, "Update", entityID);
             form.SetInputValue(entityValue);
             form.OnClick += () =>
             {
@@ -111,7 +147,7 @@ namespace BikeManagementSystemDesktop
             form.Show();
         }
 
-        private void DeleteSelectedEntities<ID,ET>(DataGridView table,CrudService<ID,ET> service) where ET: BaseEntity<ID>
+        private void DeleteSelectedEntities<ID, ET>(DataGridView table, CrudService<ID, ET> service) where ET : BaseEntity<ID>
         {
             var selectedRows = table.SelectedRows;
             for (int i = 0; i < selectedRows.Count; i++)
@@ -136,14 +172,16 @@ namespace BikeManagementSystemDesktop
 
         private void buttonAddVendor_Click(object sender, EventArgs e)
         {
-            AddSimpleEntity<long>("Add new vendor", vendorTable, vendorTablePageNumber, (name) => {
+            AddSimpleEntity("Add new vendor", vendorTable, vendorTablePageNumber, (name) =>
+            {
                 return vendorService.AddEntity(new Vendor(name));
             });
         }
 
         private void buttonVendorEdit_Click(object sender, EventArgs e)
         {
-            EditSimpleEntity<long>("Edit vendor", vendorTable, (id,name) => {
+            EditSimpleEntity<long>("Edit vendor", vendorTable, (id, name) =>
+            {
                 Vendor edited = vendorService.GetEntity(id);
                 edited.Name = name;
             });
@@ -152,6 +190,34 @@ namespace BikeManagementSystemDesktop
         private void buttonVendorDelete_Click(object sender, EventArgs e)
         {
             DeleteSelectedEntities(vendorTable, vendorService);
+        }
+
+        private void buttonTypeAdd_Click(object sender, EventArgs e)
+        {
+            AddSimpleEntity("Add new bike type", typeTable, typeTablePageNumber, (name) =>
+            {
+                return typeService.AddEntity(new BikeType(name));
+            });
+        }
+
+        private void buttonTypeEdit_Click(object sender, EventArgs e)
+        {
+            EditSimpleEntity<int>("Edit bike type", typeTable, (id, name) =>
+            {
+                BikeType bikeType = typeService.GetEntity(id);
+                bikeType.Name = name;
+            });
+        }
+
+        private void buttonTypeDelete_Click(object sender, EventArgs e)
+        {
+            DeleteSelectedEntities(typeTable, typeService);
+        }
+
+        private void typeTablePageNumber_ValueChanged(object sender, EventArgs e)
+        {
+            int page = (int)typeTablePageNumber.Value;
+            ChangeTypeTablePage(page);
         }
     }
 }

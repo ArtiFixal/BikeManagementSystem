@@ -52,10 +52,12 @@ namespace BikeManagementSystemDesktop
             buttonVendorAdd = new Button();
             TypePage = new TabPage();
             typeSplitContainer = new SplitContainer();
-            dataGridView1 = new DataGridView();
-            button8 = new Button();
-            button7 = new Button();
-            button6 = new Button();
+            typeTable = new DataGridView();
+            labelTypePage = new Label();
+            typeTablePageNumber = new NumericUpDown();
+            buttonTypeDelete = new Button();
+            buttonTypeEdit = new Button();
+            buttonTypeAdd = new Button();
             ((System.ComponentModel.ISupportInitialize)BikeTable).BeginInit();
             tabMenu.SuspendLayout();
             BikePage.SuspendLayout();
@@ -76,7 +78,8 @@ namespace BikeManagementSystemDesktop
             typeSplitContainer.Panel1.SuspendLayout();
             typeSplitContainer.Panel2.SuspendLayout();
             typeSplitContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)typeTable).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)typeTablePageNumber).BeginInit();
             SuspendLayout();
             // 
             // BikeTable
@@ -306,52 +309,80 @@ namespace BikeManagementSystemDesktop
             // 
             // typeSplitContainer.Panel1
             // 
-            typeSplitContainer.Panel1.Controls.Add(dataGridView1);
+            typeSplitContainer.Panel1.Controls.Add(typeTable);
             // 
             // typeSplitContainer.Panel2
             // 
-            typeSplitContainer.Panel2.Controls.Add(button8);
-            typeSplitContainer.Panel2.Controls.Add(button7);
-            typeSplitContainer.Panel2.Controls.Add(button6);
+            typeSplitContainer.Panel2.Controls.Add(labelTypePage);
+            typeSplitContainer.Panel2.Controls.Add(typeTablePageNumber);
+            typeSplitContainer.Panel2.Controls.Add(buttonTypeDelete);
+            typeSplitContainer.Panel2.Controls.Add(buttonTypeEdit);
+            typeSplitContainer.Panel2.Controls.Add(buttonTypeAdd);
             typeSplitContainer.Size = new Size(790, 417);
             typeSplitContainer.SplitterDistance = 703;
             typeSplitContainer.TabIndex = 0;
             // 
-            // dataGridView1
+            // typeTable
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Dock = DockStyle.Fill;
-            dataGridView1.Location = new Point(0, 0);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(703, 417);
-            dataGridView1.TabIndex = 0;
+            typeTable.AllowUserToAddRows = false;
+            typeTable.AllowUserToDeleteRows = false;
+            typeTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            typeTable.Dock = DockStyle.Fill;
+            typeTable.Location = new Point(0, 0);
+            typeTable.Name = "typeTable";
+            typeTable.ReadOnly = true;
+            typeTable.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            typeTable.Size = new Size(703, 417);
+            typeTable.TabIndex = 0;
             // 
-            // button8
+            // labelTypePage
             // 
-            button8.Location = new Point(2, 61);
-            button8.Name = "button8";
-            button8.Size = new Size(75, 23);
-            button8.TabIndex = 2;
-            button8.Text = "Delete type";
-            button8.UseVisualStyleBackColor = true;
+            labelTypePage.AutoSize = true;
+            labelTypePage.Location = new Point(2, 376);
+            labelTypePage.Name = "labelTypePage";
+            labelTypePage.Size = new Size(36, 15);
+            labelTypePage.TabIndex = 4;
+            labelTypePage.Text = "Page:";
             // 
-            // button7
+            // typeTablePageNumber
             // 
-            button7.Location = new Point(2, 32);
-            button7.Name = "button7";
-            button7.Size = new Size(75, 23);
-            button7.TabIndex = 1;
-            button7.Text = "Edit type";
-            button7.UseVisualStyleBackColor = true;
+            typeTablePageNumber.Location = new Point(3, 394);
+            typeTablePageNumber.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            typeTablePageNumber.Name = "typeTablePageNumber";
+            typeTablePageNumber.Size = new Size(83, 23);
+            typeTablePageNumber.TabIndex = 3;
+            typeTablePageNumber.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            typeTablePageNumber.ValueChanged += typeTablePageNumber_ValueChanged;
             // 
-            // button6
+            // buttonTypeDelete
             // 
-            button6.Location = new Point(3, 3);
-            button6.Name = "button6";
-            button6.Size = new Size(75, 23);
-            button6.TabIndex = 0;
-            button6.Text = "Add type";
-            button6.UseVisualStyleBackColor = true;
+            buttonTypeDelete.Location = new Point(2, 61);
+            buttonTypeDelete.Name = "buttonTypeDelete";
+            buttonTypeDelete.Size = new Size(75, 23);
+            buttonTypeDelete.TabIndex = 2;
+            buttonTypeDelete.Text = "Delete type";
+            buttonTypeDelete.UseVisualStyleBackColor = true;
+            buttonTypeDelete.Click += buttonTypeDelete_Click;
+            // 
+            // buttonTypeEdit
+            // 
+            buttonTypeEdit.Location = new Point(2, 32);
+            buttonTypeEdit.Name = "buttonTypeEdit";
+            buttonTypeEdit.Size = new Size(75, 23);
+            buttonTypeEdit.TabIndex = 1;
+            buttonTypeEdit.Text = "Edit type";
+            buttonTypeEdit.UseVisualStyleBackColor = true;
+            buttonTypeEdit.Click += buttonTypeEdit_Click;
+            // 
+            // buttonTypeAdd
+            // 
+            buttonTypeAdd.Location = new Point(3, 3);
+            buttonTypeAdd.Name = "buttonTypeAdd";
+            buttonTypeAdd.Size = new Size(75, 23);
+            buttonTypeAdd.TabIndex = 0;
+            buttonTypeAdd.Text = "Add type";
+            buttonTypeAdd.UseVisualStyleBackColor = true;
+            buttonTypeAdd.Click += buttonTypeAdd_Click;
             // 
             // MainView
             // 
@@ -381,9 +412,11 @@ namespace BikeManagementSystemDesktop
             TypePage.ResumeLayout(false);
             typeSplitContainer.Panel1.ResumeLayout(false);
             typeSplitContainer.Panel2.ResumeLayout(false);
+            typeSplitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)typeSplitContainer).EndInit();
             typeSplitContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)typeTable).EndInit();
+            ((System.ComponentModel.ISupportInitialize)typeTablePageNumber).EndInit();
             ResumeLayout(false);
         }
 
@@ -398,10 +431,10 @@ namespace BikeManagementSystemDesktop
         private Button editBike;
         private Button addBike;
         private SplitContainer typeSplitContainer;
-        private DataGridView dataGridView1;
-        private Button button6;
-        private Button button8;
-        private Button button7;
+        private DataGridView typeTable;
+        private Button buttonTypeAdd;
+        private Button buttonTypeDelete;
+        private Button buttonTypeEdit;
         private SplitContainer vendorSplitContainer;
         private DataGridView vendorTable;
         private Button buttonVendorAdd;
@@ -413,5 +446,7 @@ namespace BikeManagementSystemDesktop
         private NumericUpDown bikeTablePageNumber;
         private NumericUpDown vendorTablePageNumber;
         private Label labelVendorPage;
+        private Label labelTypePage;
+        private NumericUpDown typeTablePageNumber;
     }
 }
