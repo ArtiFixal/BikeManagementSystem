@@ -55,6 +55,20 @@ namespace BikeManagementSystemLib.Services
         }
 
         /// <summary>
+        /// Creates page of entities.
+        /// </summary>
+        /// 
+        /// <param name="pageNumber">From which page to start</param>
+        /// <param name="pageSize">How many elements to take</param>
+        /// <returns>Page prepared to fetch data</returns>
+        protected IQueryable<ET> PrepareEntiytPage(int pageNumber, int pageSize)
+        {
+            int toSkip = (pageNumber - 1) * pageSize;
+            return entitySet.Skip(toSkip)
+                .Take(pageSize);
+        }
+
+        /// <summary>
         /// Retreives page of entities from DB.
         /// </summary>
         /// 
@@ -64,9 +78,7 @@ namespace BikeManagementSystemLib.Services
         /// <returns>Page of entities</returns>
         public virtual List<ET> GetEntityPage(int pageNumber,int pageSize)
         {
-            int toSkip = (pageNumber - 1) * pageSize;
-            return entitySet.Skip(toSkip)
-                .Take(pageSize)
+            return PrepareEntiytPage(pageNumber,pageSize)
                 .ToList();
         }
 
