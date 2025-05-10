@@ -24,9 +24,9 @@ namespace BikeManagementSystemLib.Models
         [Required]
         public int Durability { get; set; }
 
-        public long LastMaintenanceId { get; set; }
+        public long? LastMaintenanceId { get; set; }
 
-        public virtual Maintenance LastMaintenance { get; set; }
+        public virtual Maintenance? LastMaintenance { get; set; }
         public virtual Vendor Vendor { get; set; }
         public virtual BikeType Type { get; set; }
         public virtual Image Image { get; set; }
@@ -34,9 +34,9 @@ namespace BikeManagementSystemLib.Models
         public virtual ICollection<Maintenance> Maintenances { get; set; }
         public virtual ICollection<RentedBike> RentedBikes { get; set; }
 
-        public Bike(string model, int typeId, long imageId, bool isAvailable, int durability, long lastMaintenanceId) : this(0, model, typeId, imageId, isAvailable, durability, lastMaintenanceId) { }
+        public Bike(string model, int typeId, long imageId, bool isAvailable, int durability, long? lastMaintenanceId) : this(0, model, typeId, imageId, isAvailable, durability, lastMaintenanceId) { }
 
-        public Bike(long id, string model, int typeId, long imageId, bool isAvailable, int durability, long lastMaintenanceId): base(id)
+        public Bike(long id, string model, int typeId, long imageId, bool isAvailable, int durability, long? lastMaintenanceId): base(id)
         {
             Model = model;
             TypeId = typeId;
