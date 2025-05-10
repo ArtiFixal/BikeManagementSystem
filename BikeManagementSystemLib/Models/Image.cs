@@ -4,7 +4,7 @@ namespace BikeManagementSystemLib.Models
 {
     public class Image: BaseEntity<long>
     {
-        public static readonly string IMAGE_DIR = "images";
+        public static readonly string IMAGE_DIR = "/BikeManagementSystem/images";
 
         [Required]
         [StringLength(255)]
