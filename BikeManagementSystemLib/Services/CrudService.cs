@@ -72,7 +72,6 @@ namespace BikeManagementSystemLib.Services
         /// Retreives page of entities from DB.
         /// </summary>
         /// 
-        /// <param name="entitySet">From where to retreive data</param>
         /// <param name="pageNumber">Which page</param>
         /// <param name="pageSize">How many elements to get</param>
         /// <returns>Page of entities</returns>
