@@ -32,12 +32,13 @@ namespace BikeManagementSystemDesktop
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridView BikeTable;
+            BikeTable = new DataGridView();
             tabMenu = new TabControl();
             DashboardPage = new TabPage();
-            button1 = new Button();
             BikePage = new TabPage();
             bikeSplitContainer = new SplitContainer();
+            labelBikeTablePage = new Label();
+            BikeTablePageNumber = new NumericUpDown();
             deleteBike = new Button();
             addBike = new Button();
             editBike = new Button();
@@ -53,15 +54,14 @@ namespace BikeManagementSystemDesktop
             button8 = new Button();
             button7 = new Button();
             button6 = new Button();
-            BikeTable = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)BikeTable).BeginInit();
             tabMenu.SuspendLayout();
-            DashboardPage.SuspendLayout();
             BikePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bikeSplitContainer).BeginInit();
             bikeSplitContainer.Panel1.SuspendLayout();
             bikeSplitContainer.Panel2.SuspendLayout();
             bikeSplitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)BikeTablePageNumber).BeginInit();
             VendorPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)vendorSplitContainer).BeginInit();
             vendorSplitContainer.Panel1.SuspendLayout();
@@ -78,10 +78,14 @@ namespace BikeManagementSystemDesktop
             // 
             // BikeTable
             // 
-            BikeTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            BikeTable.AllowUserToAddRows = false;
+            BikeTable.AllowUserToDeleteRows = false;
             BikeTable.Dock = DockStyle.Fill;
             BikeTable.Location = new Point(0, 0);
             BikeTable.Name = "BikeTable";
+            BikeTable.ReadOnly = true;
+            BikeTable.RowTemplate.Resizable = DataGridViewTriState.True;
+            BikeTable.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             BikeTable.Size = new Size(700, 417);
             BikeTable.TabIndex = 4;
             // 
@@ -100,7 +104,6 @@ namespace BikeManagementSystemDesktop
             // 
             // DashboardPage
             // 
-            DashboardPage.Controls.Add(button1);
             DashboardPage.Location = new Point(4, 24);
             DashboardPage.Name = "DashboardPage";
             DashboardPage.Padding = new Padding(3);
@@ -108,15 +111,6 @@ namespace BikeManagementSystemDesktop
             DashboardPage.TabIndex = 0;
             DashboardPage.Text = "Dashboard";
             DashboardPage.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            button1.Location = new Point(332, 6);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 0;
-            button1.Text = "Rent bike";
-            button1.UseVisualStyleBackColor = true;
             // 
             // BikePage
             // 
@@ -141,12 +135,33 @@ namespace BikeManagementSystemDesktop
             // 
             // bikeSplitContainer.Panel2
             // 
+            bikeSplitContainer.Panel2.Controls.Add(labelBikeTablePage);
+            bikeSplitContainer.Panel2.Controls.Add(BikeTablePageNumber);
             bikeSplitContainer.Panel2.Controls.Add(deleteBike);
             bikeSplitContainer.Panel2.Controls.Add(addBike);
             bikeSplitContainer.Panel2.Controls.Add(editBike);
             bikeSplitContainer.Size = new Size(790, 417);
             bikeSplitContainer.SplitterDistance = 700;
             bikeSplitContainer.TabIndex = 7;
+            // 
+            // labelBikeTablePage
+            // 
+            labelBikeTablePage.AutoSize = true;
+            labelBikeTablePage.Location = new Point(2, 371);
+            labelBikeTablePage.Name = "labelBikeTablePage";
+            labelBikeTablePage.Size = new Size(36, 15);
+            labelBikeTablePage.TabIndex = 10;
+            labelBikeTablePage.Text = "Page:";
+            // 
+            // BikeTablePageNumber
+            // 
+            BikeTablePageNumber.Location = new Point(2, 389);
+            BikeTablePageNumber.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            BikeTablePageNumber.Name = "BikeTablePageNumber";
+            BikeTablePageNumber.Size = new Size(81, 23);
+            BikeTablePageNumber.TabIndex = 9;
+            BikeTablePageNumber.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            BikeTablePageNumber.ValueChanged += BikeTablePageNumber_ValueChanged;
             // 
             // deleteBike
             // 
@@ -317,12 +332,13 @@ namespace BikeManagementSystemDesktop
             Text = "Bike Management System";
             ((System.ComponentModel.ISupportInitialize)BikeTable).EndInit();
             tabMenu.ResumeLayout(false);
-            DashboardPage.ResumeLayout(false);
             BikePage.ResumeLayout(false);
             bikeSplitContainer.Panel1.ResumeLayout(false);
             bikeSplitContainer.Panel2.ResumeLayout(false);
+            bikeSplitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)bikeSplitContainer).EndInit();
             bikeSplitContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)BikeTablePageNumber).EndInit();
             VendorPage.ResumeLayout(false);
             vendorSplitContainer.Panel1.ResumeLayout(false);
             vendorSplitContainer.Panel2.ResumeLayout(false);
@@ -343,7 +359,6 @@ namespace BikeManagementSystemDesktop
         private TabControl tabMenu;
         private TabPage DashboardPage;
         private TabPage BikePage;
-        private Button button1;
         private TabPage VendorPage;
         private TabPage TypePage;
         private Button deleteBike;
@@ -360,5 +375,8 @@ namespace BikeManagementSystemDesktop
         private Button button11;
         private Button button10;
         private SplitContainer bikeSplitContainer;
+        private DataGridView BikeTable;
+        private Label labelBikeTablePage;
+        private NumericUpDown BikeTablePageNumber;
     }
 }
