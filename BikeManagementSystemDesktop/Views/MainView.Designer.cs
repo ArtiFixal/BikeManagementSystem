@@ -38,16 +38,18 @@ namespace BikeManagementSystemDesktop
             BikePage = new TabPage();
             bikeSplitContainer = new SplitContainer();
             labelBikeTablePage = new Label();
-            BikeTablePageNumber = new NumericUpDown();
+            bikeTablePageNumber = new NumericUpDown();
             deleteBike = new Button();
             addBike = new Button();
             editBike = new Button();
             VendorPage = new TabPage();
             vendorSplitContainer = new SplitContainer();
-            dataGridView2 = new DataGridView();
-            button11 = new Button();
-            button10 = new Button();
-            button9 = new Button();
+            vendorTable = new DataGridView();
+            labelVendorPage = new Label();
+            vendorTablePageNumber = new NumericUpDown();
+            buttonVendorDelete = new Button();
+            buttonVendorEdit = new Button();
+            buttonVendorAdd = new Button();
             TypePage = new TabPage();
             typeSplitContainer = new SplitContainer();
             dataGridView1 = new DataGridView();
@@ -61,13 +63,14 @@ namespace BikeManagementSystemDesktop
             bikeSplitContainer.Panel1.SuspendLayout();
             bikeSplitContainer.Panel2.SuspendLayout();
             bikeSplitContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)BikeTablePageNumber).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bikeTablePageNumber).BeginInit();
             VendorPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)vendorSplitContainer).BeginInit();
             vendorSplitContainer.Panel1.SuspendLayout();
             vendorSplitContainer.Panel2.SuspendLayout();
             vendorSplitContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)vendorTable).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)vendorTablePageNumber).BeginInit();
             TypePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)typeSplitContainer).BeginInit();
             typeSplitContainer.Panel1.SuspendLayout();
@@ -136,7 +139,7 @@ namespace BikeManagementSystemDesktop
             // bikeSplitContainer.Panel2
             // 
             bikeSplitContainer.Panel2.Controls.Add(labelBikeTablePage);
-            bikeSplitContainer.Panel2.Controls.Add(BikeTablePageNumber);
+            bikeSplitContainer.Panel2.Controls.Add(bikeTablePageNumber);
             bikeSplitContainer.Panel2.Controls.Add(deleteBike);
             bikeSplitContainer.Panel2.Controls.Add(addBike);
             bikeSplitContainer.Panel2.Controls.Add(editBike);
@@ -153,15 +156,15 @@ namespace BikeManagementSystemDesktop
             labelBikeTablePage.TabIndex = 10;
             labelBikeTablePage.Text = "Page:";
             // 
-            // BikeTablePageNumber
+            // bikeTablePageNumber
             // 
-            BikeTablePageNumber.Location = new Point(2, 389);
-            BikeTablePageNumber.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            BikeTablePageNumber.Name = "BikeTablePageNumber";
-            BikeTablePageNumber.Size = new Size(81, 23);
-            BikeTablePageNumber.TabIndex = 9;
-            BikeTablePageNumber.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            BikeTablePageNumber.ValueChanged += BikeTablePageNumber_ValueChanged;
+            bikeTablePageNumber.Location = new Point(2, 389);
+            bikeTablePageNumber.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            bikeTablePageNumber.Name = "bikeTablePageNumber";
+            bikeTablePageNumber.Size = new Size(81, 23);
+            bikeTablePageNumber.TabIndex = 9;
+            bikeTablePageNumber.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            bikeTablePageNumber.ValueChanged += bikeTablePageNumber_ValueChanged;
             // 
             // deleteBike
             // 
@@ -209,52 +212,80 @@ namespace BikeManagementSystemDesktop
             // 
             // vendorSplitContainer.Panel1
             // 
-            vendorSplitContainer.Panel1.Controls.Add(dataGridView2);
+            vendorSplitContainer.Panel1.Controls.Add(vendorTable);
             // 
             // vendorSplitContainer.Panel2
             // 
-            vendorSplitContainer.Panel2.Controls.Add(button11);
-            vendorSplitContainer.Panel2.Controls.Add(button10);
-            vendorSplitContainer.Panel2.Controls.Add(button9);
+            vendorSplitContainer.Panel2.Controls.Add(labelVendorPage);
+            vendorSplitContainer.Panel2.Controls.Add(vendorTablePageNumber);
+            vendorSplitContainer.Panel2.Controls.Add(buttonVendorDelete);
+            vendorSplitContainer.Panel2.Controls.Add(buttonVendorEdit);
+            vendorSplitContainer.Panel2.Controls.Add(buttonVendorAdd);
             vendorSplitContainer.Size = new Size(790, 417);
             vendorSplitContainer.SplitterDistance = 690;
             vendorSplitContainer.TabIndex = 0;
             // 
-            // dataGridView2
+            // vendorTable
             // 
-            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Dock = DockStyle.Fill;
-            dataGridView2.Location = new Point(0, 0);
-            dataGridView2.Name = "dataGridView2";
-            dataGridView2.Size = new Size(690, 417);
-            dataGridView2.TabIndex = 0;
+            vendorTable.AllowUserToAddRows = false;
+            vendorTable.AllowUserToDeleteRows = false;
+            vendorTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            vendorTable.Dock = DockStyle.Fill;
+            vendorTable.Location = new Point(0, 0);
+            vendorTable.Name = "vendorTable";
+            vendorTable.ReadOnly = true;
+            vendorTable.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            vendorTable.Size = new Size(690, 417);
+            vendorTable.TabIndex = 0;
             // 
-            // button11
+            // labelVendorPage
             // 
-            button11.Location = new Point(3, 61);
-            button11.Name = "button11";
-            button11.Size = new Size(90, 23);
-            button11.TabIndex = 2;
-            button11.Text = "Delete vendor";
-            button11.UseVisualStyleBackColor = true;
+            labelVendorPage.AutoSize = true;
+            labelVendorPage.Location = new Point(2, 373);
+            labelVendorPage.Name = "labelVendorPage";
+            labelVendorPage.Size = new Size(36, 15);
+            labelVendorPage.TabIndex = 4;
+            labelVendorPage.Text = "Page:";
             // 
-            // button10
+            // vendorTablePageNumber
             // 
-            button10.Location = new Point(3, 32);
-            button10.Name = "button10";
-            button10.Size = new Size(90, 23);
-            button10.TabIndex = 1;
-            button10.Text = "Edit vendor";
-            button10.UseVisualStyleBackColor = true;
+            vendorTablePageNumber.Location = new Point(2, 391);
+            vendorTablePageNumber.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            vendorTablePageNumber.Name = "vendorTablePageNumber";
+            vendorTablePageNumber.Size = new Size(94, 23);
+            vendorTablePageNumber.TabIndex = 3;
+            vendorTablePageNumber.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            vendorTablePageNumber.ValueChanged += vendorTablePageNumber_ValueChanged;
             // 
-            // button9
+            // buttonVendorDelete
             // 
-            button9.Location = new Point(3, 3);
-            button9.Name = "button9";
-            button9.Size = new Size(90, 23);
-            button9.TabIndex = 0;
-            button9.Text = "Add vendor";
-            button9.UseVisualStyleBackColor = true;
+            buttonVendorDelete.Location = new Point(3, 61);
+            buttonVendorDelete.Name = "buttonVendorDelete";
+            buttonVendorDelete.Size = new Size(90, 23);
+            buttonVendorDelete.TabIndex = 2;
+            buttonVendorDelete.Text = "Delete vendor";
+            buttonVendorDelete.UseVisualStyleBackColor = true;
+            buttonVendorDelete.Click += buttonVendorDelete_Click;
+            // 
+            // buttonVendorEdit
+            // 
+            buttonVendorEdit.Location = new Point(3, 32);
+            buttonVendorEdit.Name = "buttonVendorEdit";
+            buttonVendorEdit.Size = new Size(90, 23);
+            buttonVendorEdit.TabIndex = 1;
+            buttonVendorEdit.Text = "Edit vendor";
+            buttonVendorEdit.UseVisualStyleBackColor = true;
+            buttonVendorEdit.Click += buttonVendorEdit_Click;
+            // 
+            // buttonVendorAdd
+            // 
+            buttonVendorAdd.Location = new Point(3, 3);
+            buttonVendorAdd.Name = "buttonVendorAdd";
+            buttonVendorAdd.Size = new Size(90, 23);
+            buttonVendorAdd.TabIndex = 0;
+            buttonVendorAdd.Text = "Add vendor";
+            buttonVendorAdd.UseVisualStyleBackColor = true;
+            buttonVendorAdd.Click += buttonAddVendor_Click;
             // 
             // TypePage
             // 
@@ -338,13 +369,15 @@ namespace BikeManagementSystemDesktop
             bikeSplitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)bikeSplitContainer).EndInit();
             bikeSplitContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)BikeTablePageNumber).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bikeTablePageNumber).EndInit();
             VendorPage.ResumeLayout(false);
             vendorSplitContainer.Panel1.ResumeLayout(false);
             vendorSplitContainer.Panel2.ResumeLayout(false);
+            vendorSplitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)vendorSplitContainer).EndInit();
             vendorSplitContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)vendorTable).EndInit();
+            ((System.ComponentModel.ISupportInitialize)vendorTablePageNumber).EndInit();
             TypePage.ResumeLayout(false);
             typeSplitContainer.Panel1.ResumeLayout(false);
             typeSplitContainer.Panel2.ResumeLayout(false);
@@ -370,13 +403,15 @@ namespace BikeManagementSystemDesktop
         private Button button8;
         private Button button7;
         private SplitContainer vendorSplitContainer;
-        private DataGridView dataGridView2;
-        private Button button9;
-        private Button button11;
-        private Button button10;
+        private DataGridView vendorTable;
+        private Button buttonVendorAdd;
+        private Button buttonVendorDelete;
+        private Button buttonVendorEdit;
         private SplitContainer bikeSplitContainer;
         private DataGridView BikeTable;
         private Label labelBikeTablePage;
-        private NumericUpDown BikeTablePageNumber;
+        private NumericUpDown bikeTablePageNumber;
+        private NumericUpDown vendorTablePageNumber;
+        private Label labelVendorPage;
     }
 }
