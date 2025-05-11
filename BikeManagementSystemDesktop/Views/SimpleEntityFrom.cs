@@ -38,8 +38,11 @@ namespace BikeManagementSystemDesktop.Views
 
         private void ActionButton_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(textBox.Text))
+            if (!InputValidator.ValidateTextBox(textBox))
+            {
+                MessageBox.Show("Name can't be blank","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 return;
+            }
             OnClick.Invoke();
             Close();
         }
@@ -51,16 +54,7 @@ namespace BikeManagementSystemDesktop.Views
 
         private void textBox_TextChanged(object sender, EventArgs e)
         {
-            if(string.IsNullOrWhiteSpace(textBox.Text))
-            {
-                textBox.BorderStyle = BorderStyle.FixedSingle;
-                textBox.BackColor = Color.Red;
-            }
-            else
-            {
-                textBox.BorderStyle = BorderStyle.Fixed3D;
-                textBox.BackColor = SystemColors.Window;
-            }
+            InputValidator.ValidateTextBox(textBox);
         }
     }
 }
