@@ -49,6 +49,7 @@
             textBox.Name = "textBox";
             textBox.Size = new Size(183, 23);
             textBox.TabIndex = 1;
+            textBox.TextChanged += textBox_TextChanged;
             // 
             // ActionButton
             // 

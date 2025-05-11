@@ -1,4 +1,6 @@
-﻿namespace BikeManagementSystemDesktop.Views
+﻿using Microsoft.IdentityModel.Tokens;
+
+namespace BikeManagementSystemDesktop.Views
 {
     public partial class SimpleEntityFrom : Form
     {
@@ -13,7 +15,7 @@
             ActionButton.Text = actionButtonText;
         }
 
-        public SimpleEntityFrom(string formName, string actionButtonText,object entityId):this(formName,actionButtonText)
+        public SimpleEntityFrom(string formName, string actionButtonText, object entityId) : this(formName, actionButtonText)
         {
             EntityId = entityId;
         }
@@ -36,6 +38,8 @@
 
         private void ActionButton_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+                return;
             OnClick.Invoke();
             Close();
         }
@@ -43,6 +47,20 @@
         private void CancelButton_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void textBox_TextChanged(object sender, EventArgs e)
+        {
+            if(string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                textBox.BorderStyle = BorderStyle.FixedSingle;
+                textBox.BackColor = Color.Red;
+            }
+            else
+            {
+                textBox.BorderStyle = BorderStyle.Fixed3D;
+                textBox.BackColor = SystemColors.Window;
+            }
         }
     }
 }

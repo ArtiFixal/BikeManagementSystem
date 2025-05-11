@@ -111,7 +111,7 @@ namespace BikeManagementSystemDesktop
             form.Owner = this;
             form.OnClick += () =>
             {
-                string entityField = form.GetInputValue();
+                string entityField = form.GetInputValue().Trim();
                 ID newEntityID = clickCallback.Invoke(entityField);
                 if (pageInput.Value == pageInput.Maximum)
                 {
@@ -140,7 +140,7 @@ namespace BikeManagementSystemDesktop
             form.SetInputValue(entityValue);
             form.OnClick += () =>
             {
-                string newValue = form.GetInputValue();
+                string newValue = form.GetInputValue().Trim();
                 clickCallback.Invoke(entityID, newValue);
                 table.SelectedRows[0].Cells[1].Value = newValue;
             };
