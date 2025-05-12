@@ -46,5 +46,15 @@ namespace BikeManagementSystemLib.Models
             Durability = durability;
             LastMaintenanceId = lastMaintenanceId;
         }
+
+        public Bike(long id, string model, Vendor vendor, BikeType type, Image image, bool isAvailable, int durability) : base(id)
+        {
+            Model = model;
+            Vendor = vendor;
+            Type = type;
+            Image = image;
+            IsAvailable = isAvailable;
+            Durability = durability;
+        }
     }
 }
