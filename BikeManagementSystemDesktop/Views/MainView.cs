@@ -118,7 +118,7 @@ namespace BikeManagementSystemDesktop
                     table.Rows.Add(newEntityID, entityField);
                 }
             };
-            form.Show();
+            form.ShowDialog();
         }
 
         private delegate void UpdateSimpleEntity<ID>(ID entityID, string updatedFieldValue);
@@ -144,7 +144,7 @@ namespace BikeManagementSystemDesktop
                 clickCallback.Invoke(entityID, newValue);
                 table.SelectedRows[0].Cells[1].Value = newValue;
             };
-            form.Show();
+            form.ShowDialog();
         }
 
         private void DeleteSelectedEntities<ID, ET>(DataGridView table, CrudService<ID, ET> service) where ET : BaseEntity<ID>
@@ -218,6 +218,44 @@ namespace BikeManagementSystemDesktop
         {
             int page = (int)typeTablePageNumber.Value;
             ChangeTypeTablePage(page);
+        }
+
+        private void buttonAddBike_Click(object sender, EventArgs e)
+        {
+            BikeForm addForm = new BikeForm("Add new bike", "Add", vendorService, typeService);
+            addForm.Owner = this;
+            addForm.OnClick += (model, imagePath, vendor, bikeType) =>
+            {
+                ImageModel image = new ImageModel(imagePath);
+                bikeService.AddEntity(new Bike(0, model, vendor, bikeType, image, true, 100));
+            };
+            addForm.ShowDialog();
+        }
+
+        private void buttonEditBike_Click(object sender, EventArgs e)
+        {
+            long bikeId = (long)BikeTable.SelectedRows[0].Cells[0].Value;
+            Bike toEdit = bikeService.GetEntity(bikeId);
+            BikeForm editForm = new BikeForm("Edit bike", "Update", vendorService, typeService, toEdit);
+            editForm.Owner = this;
+            editForm.OnClick += (model, imagePath, vendor, bikeType) =>
+            {
+                if(imagePath!=null)
+                {
+                    ImageModel image = new ImageModel(imagePath);
+                    toEdit.Image = image;
+                }
+                toEdit.Model = model;
+                toEdit.Vendor = vendor;
+                toEdit.Type = bikeType;
+                bikeService.EditEntity(toEdit);
+            };
+            editForm.ShowDialog();
+        }
+
+        private void buttonDeleteBike_Click(object sender, EventArgs e)
+        {
+            DeleteSelectedEntities(BikeTable, bikeService);
         }
     }
 }

@@ -39,9 +39,9 @@ namespace BikeManagementSystemDesktop
             bikeSplitContainer = new SplitContainer();
             labelBikeTablePage = new Label();
             bikeTablePageNumber = new NumericUpDown();
-            deleteBike = new Button();
-            addBike = new Button();
-            editBike = new Button();
+            buttonDeleteBike = new Button();
+            buttonAddBike = new Button();
+            buttonEditBike = new Button();
             VendorPage = new TabPage();
             vendorSplitContainer = new SplitContainer();
             vendorTable = new DataGridView();
@@ -143,9 +143,9 @@ namespace BikeManagementSystemDesktop
             // 
             bikeSplitContainer.Panel2.Controls.Add(labelBikeTablePage);
             bikeSplitContainer.Panel2.Controls.Add(bikeTablePageNumber);
-            bikeSplitContainer.Panel2.Controls.Add(deleteBike);
-            bikeSplitContainer.Panel2.Controls.Add(addBike);
-            bikeSplitContainer.Panel2.Controls.Add(editBike);
+            bikeSplitContainer.Panel2.Controls.Add(buttonDeleteBike);
+            bikeSplitContainer.Panel2.Controls.Add(buttonAddBike);
+            bikeSplitContainer.Panel2.Controls.Add(buttonEditBike);
             bikeSplitContainer.Size = new Size(790, 417);
             bikeSplitContainer.SplitterDistance = 700;
             bikeSplitContainer.TabIndex = 7;
@@ -169,32 +169,35 @@ namespace BikeManagementSystemDesktop
             bikeTablePageNumber.Value = new decimal(new int[] { 1, 0, 0, 0 });
             bikeTablePageNumber.ValueChanged += bikeTablePageNumber_ValueChanged;
             // 
-            // deleteBike
+            // buttonDeleteBike
             // 
-            deleteBike.Location = new Point(3, 61);
-            deleteBike.Name = "deleteBike";
-            deleteBike.Size = new Size(75, 23);
-            deleteBike.TabIndex = 8;
-            deleteBike.Text = "Delete Bike";
-            deleteBike.UseVisualStyleBackColor = true;
+            buttonDeleteBike.Location = new Point(3, 61);
+            buttonDeleteBike.Name = "buttonDeleteBike";
+            buttonDeleteBike.Size = new Size(75, 23);
+            buttonDeleteBike.TabIndex = 8;
+            buttonDeleteBike.Text = "Delete Bike";
+            buttonDeleteBike.UseVisualStyleBackColor = true;
+            buttonDeleteBike.Click += buttonDeleteBike_Click;
             // 
-            // addBike
+            // buttonAddBike
             // 
-            addBike.Location = new Point(3, 3);
-            addBike.Name = "addBike";
-            addBike.Size = new Size(75, 23);
-            addBike.TabIndex = 6;
-            addBike.Text = "Add Bike";
-            addBike.UseVisualStyleBackColor = true;
+            buttonAddBike.Location = new Point(3, 3);
+            buttonAddBike.Name = "buttonAddBike";
+            buttonAddBike.Size = new Size(75, 23);
+            buttonAddBike.TabIndex = 6;
+            buttonAddBike.Text = "Add Bike";
+            buttonAddBike.UseVisualStyleBackColor = true;
+            buttonAddBike.Click += buttonAddBike_Click;
             // 
-            // editBike
+            // buttonEditBike
             // 
-            editBike.Location = new Point(3, 32);
-            editBike.Name = "editBike";
-            editBike.Size = new Size(75, 23);
-            editBike.TabIndex = 7;
-            editBike.Text = "Edit Bike";
-            editBike.UseVisualStyleBackColor = true;
+            buttonEditBike.Location = new Point(3, 32);
+            buttonEditBike.Name = "buttonEditBike";
+            buttonEditBike.Size = new Size(75, 23);
+            buttonEditBike.TabIndex = 7;
+            buttonEditBike.Text = "Edit Bike";
+            buttonEditBike.UseVisualStyleBackColor = true;
+            buttonEditBike.Click += buttonEditBike_Click;
             // 
             // VendorPage
             // 
@@ -427,9 +430,9 @@ namespace BikeManagementSystemDesktop
         private TabPage BikePage;
         private TabPage VendorPage;
         private TabPage TypePage;
-        private Button deleteBike;
-        private Button editBike;
-        private Button addBike;
+        private Button buttonDeleteBike;
+        private Button buttonEditBike;
+        private Button buttonAddBike;
         private SplitContainer typeSplitContainer;
         private DataGridView typeTable;
         private Button buttonTypeAdd;
