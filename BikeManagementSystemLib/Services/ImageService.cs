@@ -20,7 +20,8 @@ namespace BikeManagementSystemLib.Services
         private string MoveFile(Image image)
         {
             string formatedDateNow = DateTime.Now.ToString("yyyyMMddHHmmss");
-            string fileName = Path.GetFileName(image.Path) + '_' + formatedDateNow;
+            string fileName = Path.GetFileNameWithoutExtension(image.Path) + 
+                '_' + formatedDateNow + Path.GetExtension(image.Path);
             string finalPath = Path.Combine(Image.IMAGE_DIR, fileName);
             File.Copy(image.Path, finalPath);
             return finalPath;
