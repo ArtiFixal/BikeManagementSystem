@@ -34,9 +34,9 @@ namespace BikeManagementSystemLib.Models
         public virtual ICollection<Maintenance> Maintenances { get; set; }
         public virtual ICollection<RentedBike> RentedBikes { get; set; }
 
-        public Bike(string model,int vendorId, int typeId, long imageId, bool isAvailable, int durability, long? lastMaintenanceId) : this(0, model,vendorId, typeId, imageId, isAvailable, durability, lastMaintenanceId) { }
+        public Bike(string model,long vendorId, int typeId, long imageId, bool isAvailable, int durability, long? lastMaintenanceId) : this(0, model,vendorId, typeId, imageId, isAvailable, durability, lastMaintenanceId) { }
 
-        public Bike(long id, string model, int vendorId, int typeId, long imageId, bool isAvailable, int durability, long? lastMaintenanceId): base(id)
+        public Bike(long id, string model, long vendorId, int typeId, long imageId, bool isAvailable, int durability, long? lastMaintenanceId): base(id)
         {
             Model = model;
             VendorId=vendorId;
