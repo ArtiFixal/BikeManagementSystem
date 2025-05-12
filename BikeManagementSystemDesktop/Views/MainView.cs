@@ -94,6 +94,11 @@ namespace BikeManagementSystemDesktop
             });
         }
 
+        private void ShowError(string msg)
+        {
+            MessageBox.Show(this, msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
         private delegate ID InsertSimpleEntity<ID>(string entityField);
 
         /// <summary>
@@ -134,6 +139,11 @@ namespace BikeManagementSystemDesktop
         /// action button click</param>
         private void EditSimpleEntity<ID>(string formTitle, DataGridView table, UpdateSimpleEntity<ID> clickCallback)
         {
+            if(table.SelectedRows.Count == 0)
+            {
+                ShowError("To edit object you need to select row first.");
+                return;
+            }
             ID entityID = (ID)table.SelectedRows[0].Cells[0].Value;
             string entityValue = (string)table.SelectedRows[0].Cells[1].Value;
             SimpleEntityFrom form = new SimpleEntityFrom(formTitle, "Update", entityID);
@@ -150,12 +160,15 @@ namespace BikeManagementSystemDesktop
         private void DeleteSelectedEntities<ID, ET>(DataGridView table, CrudService<ID, ET> service) where ET : BaseEntity<ID>
         {
             var selectedRows = table.SelectedRows;
-            for (int i = 0; i < selectedRows.Count; i++)
-            {
-                ID entityID = (ID)selectedRows[i].Cells[0].Value;
-                service.DeleteEntity(entityID);
-                table.Rows.RemoveAt(selectedRows[i].Index);
-            }
+            if (selectedRows.Count == 0)
+                ShowError("To delete you need to select one or more rows first.");
+            else
+                for (int i = 0; i < selectedRows.Count; i++)
+                {
+                    ID entityID = (ID)selectedRows[i].Cells[0].Value;
+                    service.DeleteEntity(entityID);
+                    table.Rows.RemoveAt(selectedRows[i].Index);
+                }
         }
 
         private void bikeTablePageNumber_ValueChanged(object sender, EventArgs e)
@@ -234,6 +247,11 @@ namespace BikeManagementSystemDesktop
 
         private void buttonEditBike_Click(object sender, EventArgs e)
         {
+            if(BikeTable.SelectedRows.Count == 0)
+            {
+                ShowError("To edit object you need to select row first.");
+                return;
+            }
             long bikeId = (long)BikeTable.SelectedRows[0].Cells[0].Value;
             Bike toEdit = bikeService.GetEntity(bikeId);
             BikeForm editForm = new BikeForm("Edit bike", "Update", vendorService, typeService, toEdit);
