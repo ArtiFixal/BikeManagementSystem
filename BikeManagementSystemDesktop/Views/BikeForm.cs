@@ -35,26 +35,21 @@ namespace BikeManagementSystemDesktop.Views
             Close();
         }
 
-        private void ShowErrorDialog(string reason)
-        {
-            MessageBox.Show(this, reason, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
         private void buttonAction_Click(object sender, EventArgs e)
         {
             if (!InputValidator.ValidateTextBox(modelBox))
             {
-                ShowErrorDialog("Model can't be blank.");
+                GuiUtils.ShowError(this,"Model can't be blank.");
                 return;
             }
             if (!InputValidator.ValidateComboBox(vendorBox))
             {
-                ShowErrorDialog("Vendor must be selected.");
+                GuiUtils.ShowError(this,"Vendor must be selected.");
                 return;
             }
             if (!InputValidator.ValidateComboBox(typeBox))
             {
-                ShowErrorDialog("Bike type must be selected.");
+                GuiUtils.ShowError(this,"Bike type must be selected.");
                 return;
             }
             OnClick.Invoke(modelBox.Text, imagePath, (Vendor)vendorBox.SelectedItem, (BikeType)typeBox.SelectedItem);
@@ -80,9 +75,7 @@ namespace BikeManagementSystemDesktop.Views
             InputValidator.ValidateTextBox(modelBox);
         }
 
-        private delegate T ValueAdd<T>(string fieldValue);
-
-        private void AddNewComboboxValue<T>(ComboBox comboBox, string formTitle, ValueAdd<T> clickCallback)
+        private void AddNewComboboxValue<T>(ComboBox comboBox, string formTitle, GuiUtils.SimpleFormSubmit<T> clickCallback)
         {
             SimpleEntityFrom form = new SimpleEntityFrom(formTitle, "Add");
             form.Owner = this;
@@ -92,7 +85,7 @@ namespace BikeManagementSystemDesktop.Views
                 T item = clickCallback.Invoke(formInput);
                 comboBox.Items.Add(item);
             };
-            form.Show();
+            form.ShowDialog();
         }
 
         private void buttonAddVendor_Click(object sender, EventArgs e)
@@ -109,6 +102,5 @@ namespace BikeManagementSystemDesktop.Views
                 return new BikeType(name);
             });
         }
-
     }
 }

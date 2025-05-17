@@ -94,13 +94,6 @@ namespace BikeManagementSystemDesktop
             });
         }
 
-        private void ShowError(string msg)
-        {
-            MessageBox.Show(this, msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        private delegate ID InsertSimpleEntity<ID>(string entityField);
-
         /// <summary>
         /// Common code for creating new entity with one field.
         /// </summary>
@@ -110,7 +103,7 @@ namespace BikeManagementSystemDesktop
         /// <param name="table">Where to add entity</param>
         /// <param name="pageInput">Where to check for current page</param>
         /// <param name="clickCallback">What will happen after form action button click</param>
-        private void AddSimpleEntity<ID>(string formTitle, DataGridView table, NumericUpDown pageInput, InsertSimpleEntity<ID> clickCallback)
+        private void AddSimpleEntity<ID>(string formTitle, DataGridView table, NumericUpDown pageInput, GuiUtils.SimpleFormSubmit<ID> clickCallback)
         {
             SimpleEntityFrom form = new SimpleEntityFrom("Add new vendor", "Add");
             form.Owner = this;
@@ -139,9 +132,9 @@ namespace BikeManagementSystemDesktop
         /// action button click</param>
         private void EditSimpleEntity<ID>(string formTitle, DataGridView table, UpdateSimpleEntity<ID> clickCallback)
         {
-            if(table.SelectedRows.Count == 0)
+            if (table.SelectedRows.Count == 0)
             {
-                ShowError("To edit object you need to select row first.");
+                GuiUtils.ShowError(this,"To edit object you need to select row first.");
                 return;
             }
             ID entityID = (ID)table.SelectedRows[0].Cells[0].Value;
@@ -161,7 +154,7 @@ namespace BikeManagementSystemDesktop
         {
             var selectedRows = table.SelectedRows;
             if (selectedRows.Count == 0)
-                ShowError("To delete you need to select one or more rows first.");
+                GuiUtils.ShowError(this,"To delete you need to select one or more rows first.");
             else
                 for (int i = 0; i < selectedRows.Count; i++)
                 {
@@ -247,9 +240,9 @@ namespace BikeManagementSystemDesktop
 
         private void buttonEditBike_Click(object sender, EventArgs e)
         {
-            if(BikeTable.SelectedRows.Count == 0)
+            if (BikeTable.SelectedRows.Count == 0)
             {
-                ShowError("To edit object you need to select row first.");
+                GuiUtils.ShowError(this,"To edit object you need to select row first.");
                 return;
             }
             long bikeId = (long)BikeTable.SelectedRows[0].Cells[0].Value;
@@ -258,7 +251,7 @@ namespace BikeManagementSystemDesktop
             editForm.Owner = this;
             editForm.OnClick += (model, imagePath, vendor, bikeType) =>
             {
-                if(imagePath!=null)
+                if (imagePath != null)
                 {
                     ImageModel image = new ImageModel(imagePath);
                     toEdit.Image = image;
