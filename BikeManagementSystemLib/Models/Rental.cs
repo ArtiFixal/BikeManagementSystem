@@ -18,9 +18,9 @@ namespace BikeManagementSystemLib.Models
         [DefaultValue(false)]
         public bool AllBikesReturned { get; set; }
         public virtual Client Client { get; set; }
-        public virtual ICollection<RentedBike> RentedBikes { get; set; }
+        public virtual ICollection<RentedBike> RentedBikes { get; set; } = [];
 
-        public Rental(long clientID, DateTime rentedFrom, DateTime rentedTo) : this(0, clientID, rentedFrom, rentedTo, false) { }
+        public Rental(long clientID, DateTime rentedFrom, DateTime rentedTo) : this(0, clientID, rentedFrom, rentedTo, false) {}
 
         public Rental(long id,long clientID, DateTime rentedFrom, DateTime rentedTo, bool allBikesReturned): base(id)
         {
@@ -28,6 +28,13 @@ namespace BikeManagementSystemLib.Models
             RentedFrom = rentedFrom;
             RentedTo = rentedTo;
             AllBikesReturned = allBikesReturned;
+        }
+
+        public Rental(Client client,DateTime rentedFrom,DateTime rentedTo): base(0)
+        {
+            Client = client;
+            RentedFrom = rentedFrom;
+            RentedTo = rentedTo;
         }
     }
 }

@@ -27,5 +27,17 @@
         /// 
         /// <returns>Type returned on form submit</returns>
         public delegate T SimpleFormSubmit<T>(string fieldValue);
+
+        /// <summary>
+        /// Makes images in given column scale to cell size.
+        /// </summary>
+        /// 
+        /// <param name="table">Where to look for column</param>
+        /// <param name="imageColumnIndex">Which column cells to scale</param>
+        public static void FixImageScaling(DataGridView table, int imageColumnIndex)
+        {
+            DataGridViewImageColumn images = (DataGridViewImageColumn)table.Columns[imageColumnIndex];
+            images.ImageLayout = DataGridViewImageCellLayout.Zoom;
+        }
     }
 }

@@ -25,6 +25,33 @@ namespace BikeManagementSystemLib.Services
             return maintenance;
         }
 
+        /// <summary>
+        /// Searches for available bikes filtered by given parameters.
+        /// </summary>
+        /// 
+        /// <param name="modelName">How its named</param>
+        /// <param name="vendorId">Who manufactured it</param>
+        /// <param name="bikeTypeId">What type is is</param>
+        /// 
+        /// <returns>Filtered available bikes</returns>
+        public List<Bike> GetAvailableBikes(string? modelName,long? vendorId,int? bikeTypeId)
+        {
+            IQueryable<Bike> query = entitySet.Where(bike => bike.IsAvailable);
+            if (!string.IsNullOrWhiteSpace(modelName))
+            {
+                query=query.Where(bike=>bike.Model.Contains(modelName));
+            }
+            if (vendorId != null)
+            {
+                query=query.Where(bike => bike.Vendor.Id == vendorId);
+            }
+            if(bikeTypeId != null)
+            {
+                query=query.Where(bike=>bike.TypeId==bikeTypeId);
+            }
+            return query.ToList();
+        }
+
         public List<Bike> GetBikesReqiringMaintenance()
         {
             return entitySet.Where(bike => bike.Durability < 40)

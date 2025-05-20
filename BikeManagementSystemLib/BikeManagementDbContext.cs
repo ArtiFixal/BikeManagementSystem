@@ -24,8 +24,8 @@ namespace BikeManagementSystemLib
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Bike>(entity => {
-                entity.Property(bike => bike.Id)
-                .ValueGeneratedOnAdd();
+                //entity.Property(bike => bike.Id)
+                //.ValueGeneratedOnAdd();
 
                 entity.HasOne(bike => bike.Type)
                 .WithMany(type => type.Bikes)

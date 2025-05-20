@@ -16,6 +16,8 @@ namespace BikeManagementSystemDesktop
         private BikeServiceExtended bikeService;
         private VendorService vendorService;
         private BikeTypeService typeService;
+        private ClientService clientService;
+        private RentalService rentalService;
 
         public MainView(BikeManagementDbContext context)
         {
@@ -23,6 +25,8 @@ namespace BikeManagementSystemDesktop
             bikeService = new BikeServiceExtended(context);
             vendorService = new VendorService(context);
             typeService = new BikeTypeService(context);
+            clientService = new ClientService(context);
+            rentalService = new RentalService(context);
             InitializeComponent();
             SetUpTables();
         }
@@ -53,13 +57,18 @@ namespace BikeManagementSystemDesktop
             typeTable.Columns.Add("Name", "Name");
             typeTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
+            // Active Rentals
+            activeRentalTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
             // Setup pages
             bikeTablePageNumber.Maximum = bikeService.GetPageCount(BikeService.DEFAULT_PAGE_SIZE) + 1;
             vendorTablePageNumber.Maximum = vendorService.GetPageCount(VendorService.DEFAULT_PAGE_SIZE) + 1;
             typeTablePageNumber.Maximum = typeService.GetPageCount(BikeTypeService.DEFAULT_PAGE_SIZE) + 1;
+            activeRentalPageNumber.Maximum = rentalService.GetActiveRentalsPageCount(RentalService.DEFAULT_PAGE_SIZE) + 1;
             ChangeBikeTablePage(1);
             ChangeVendorTablePage(1);
             ChangeTypeTablePage(1);
+            ChangeActiveRentalsPage(1);
         }
 
         private void ChangeBikeTablePage(int page)
@@ -92,6 +101,15 @@ namespace BikeManagementSystemDesktop
             {
                 typeTable.Rows.Add(type.Id, type.Name);
             });
+        }
+
+        private void ChangeActiveRentalsPage(int page)
+        {
+            activeRentalTable.DataSource = rentalService.GetActiveRentalsPage(page)
+                .Select(rental => new ActiveRentalTableRow(rental.Id,
+                    $"{rental.Client.FirstName} {rental.Client.LastName}",
+                    rental.Client.PhoneNumber, rental.RentedFrom, rental.RentedTo)
+                ).ToList();
         }
 
         /// <summary>
@@ -134,7 +152,7 @@ namespace BikeManagementSystemDesktop
         {
             if (table.SelectedRows.Count == 0)
             {
-                GuiUtils.ShowError(this,"To edit object you need to select row first.");
+                GuiUtils.ShowError(this, "To edit object you need to select row first.");
                 return;
             }
             ID entityID = (ID)table.SelectedRows[0].Cells[0].Value;
@@ -154,7 +172,7 @@ namespace BikeManagementSystemDesktop
         {
             var selectedRows = table.SelectedRows;
             if (selectedRows.Count == 0)
-                GuiUtils.ShowError(this,"To delete you need to select one or more rows first.");
+                GuiUtils.ShowError(this, "To delete you need to select one or more rows first.");
             else
                 for (int i = 0; i < selectedRows.Count; i++)
                 {
@@ -242,7 +260,7 @@ namespace BikeManagementSystemDesktop
         {
             if (BikeTable.SelectedRows.Count == 0)
             {
-                GuiUtils.ShowError(this,"To edit object you need to select row first.");
+                GuiUtils.ShowError(this, "To edit object you need to select row first.");
                 return;
             }
             long bikeId = (long)BikeTable.SelectedRows[0].Cells[0].Value;
@@ -267,6 +285,45 @@ namespace BikeManagementSystemDesktop
         private void buttonDeleteBike_Click(object sender, EventArgs e)
         {
             DeleteSelectedEntities(BikeTable, bikeService);
+        }
+
+        private void buttonRent_Click(object sender, EventArgs e)
+        {
+            BikeRentalForm rentalForm = new BikeRentalForm(bikeService, vendorService, typeService, clientService, rentalService);
+            rentalForm.Owner = this;
+            rentalForm.OnSubmit += () =>
+            {
+                // Refresh active rentals
+                if (activeRentalPageNumber.Value == activeRentalPageNumber.Maximum)
+                    ChangeActiveRentalsPage((int)activeRentalPageNumber.Value);
+            };
+            rentalForm.ShowDialog();
+        }
+
+        private void activeRentalPageNumber_ValueChanged(object sender, EventArgs e)
+        {
+            int page = (int)activeRentalPageNumber.Value;
+            ChangeActiveRentalsPage(page);
+        }
+
+        private void buttonActiveRentalsOpen_Click(object sender, EventArgs e)
+        {
+            var selectedRow = activeRentalTable.SelectedRows;
+            if(selectedRow.Count==0)
+            {
+                GuiUtils.ShowError(this, "First select acitve rental to open");
+                return;
+            }
+            long rentalID = (long)selectedRow[0].Cells[0].Value;
+            Rental toOpen=rentalService.GetEntity(rentalID);
+            ActiveRentalForm activeRental=new ActiveRentalForm(toOpen,rentalService);
+            activeRental.Owner = this;
+            activeRental.OnClose += (allBikesReturned) =>
+            {
+                if (allBikesReturned)
+                    ChangeActiveRentalsPage((int)activeRentalPageNumber.Value);
+            };
+            activeRental.ShowDialog();
         }
     }
 }

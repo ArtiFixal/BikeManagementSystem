@@ -33,8 +33,9 @@ namespace BikeManagementSystemDesktop
         private void InitializeComponent()
         {
             BikeTable = new DataGridView();
-            tabMenu = new TabControl();
-            DashboardPage = new TabPage();
+            menuTab = new TabControl();
+            pageDashborad = new TabPage();
+            buttonRent = new Button();
             BikePage = new TabPage();
             bikeSplitContainer = new SplitContainer();
             labelBikeTablePage = new Label();
@@ -58,8 +59,15 @@ namespace BikeManagementSystemDesktop
             buttonTypeDelete = new Button();
             buttonTypeEdit = new Button();
             buttonTypeAdd = new Button();
+            ActiveRentalsPage = new TabPage();
+            splitContainer1 = new SplitContainer();
+            activeRentalTable = new DataGridView();
+            activeRentalPageNumber = new NumericUpDown();
+            labelActiveRentalsPage = new Label();
+            buttonActiveRentalsOpen = new Button();
             ((System.ComponentModel.ISupportInitialize)BikeTable).BeginInit();
-            tabMenu.SuspendLayout();
+            menuTab.SuspendLayout();
+            pageDashborad.SuspendLayout();
             BikePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bikeSplitContainer).BeginInit();
             bikeSplitContainer.Panel1.SuspendLayout();
@@ -80,6 +88,13 @@ namespace BikeManagementSystemDesktop
             typeSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)typeTable).BeginInit();
             ((System.ComponentModel.ISupportInitialize)typeTablePageNumber).BeginInit();
+            ActiveRentalsPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
+            splitContainer1.Panel1.SuspendLayout();
+            splitContainer1.Panel2.SuspendLayout();
+            splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)activeRentalTable).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)activeRentalPageNumber).BeginInit();
             SuspendLayout();
             // 
             // BikeTable
@@ -95,28 +110,40 @@ namespace BikeManagementSystemDesktop
             BikeTable.Size = new Size(700, 417);
             BikeTable.TabIndex = 4;
             // 
-            // tabMenu
+            // menuTab
             // 
-            tabMenu.Controls.Add(DashboardPage);
-            tabMenu.Controls.Add(BikePage);
-            tabMenu.Controls.Add(VendorPage);
-            tabMenu.Controls.Add(TypePage);
-            tabMenu.Dock = DockStyle.Fill;
-            tabMenu.Location = new Point(0, 0);
-            tabMenu.Name = "tabMenu";
-            tabMenu.SelectedIndex = 0;
-            tabMenu.Size = new Size(804, 451);
-            tabMenu.TabIndex = 0;
+            menuTab.Controls.Add(pageDashborad);
+            menuTab.Controls.Add(BikePage);
+            menuTab.Controls.Add(VendorPage);
+            menuTab.Controls.Add(TypePage);
+            menuTab.Controls.Add(ActiveRentalsPage);
+            menuTab.Dock = DockStyle.Fill;
+            menuTab.Location = new Point(0, 0);
+            menuTab.Name = "menuTab";
+            menuTab.SelectedIndex = 0;
+            menuTab.Size = new Size(804, 451);
+            menuTab.TabIndex = 0;
             // 
-            // DashboardPage
+            // pageDashborad
             // 
-            DashboardPage.Location = new Point(4, 24);
-            DashboardPage.Name = "DashboardPage";
-            DashboardPage.Padding = new Padding(3);
-            DashboardPage.Size = new Size(796, 423);
-            DashboardPage.TabIndex = 0;
-            DashboardPage.Text = "Dashboard";
-            DashboardPage.UseVisualStyleBackColor = true;
+            pageDashborad.Controls.Add(buttonRent);
+            pageDashborad.Location = new Point(4, 24);
+            pageDashborad.Name = "pageDashborad";
+            pageDashborad.Padding = new Padding(3);
+            pageDashborad.Size = new Size(796, 423);
+            pageDashborad.TabIndex = 0;
+            pageDashborad.Text = "Dashboard";
+            pageDashborad.UseVisualStyleBackColor = true;
+            // 
+            // buttonRent
+            // 
+            buttonRent.Location = new Point(6, 6);
+            buttonRent.Name = "buttonRent";
+            buttonRent.Size = new Size(75, 23);
+            buttonRent.TabIndex = 0;
+            buttonRent.Text = "Rent bikes";
+            buttonRent.UseVisualStyleBackColor = true;
+            buttonRent.Click += buttonRent_Click;
             // 
             // BikePage
             // 
@@ -387,16 +414,87 @@ namespace BikeManagementSystemDesktop
             buttonTypeAdd.UseVisualStyleBackColor = true;
             buttonTypeAdd.Click += buttonTypeAdd_Click;
             // 
+            // ActiveRentalsPage
+            // 
+            ActiveRentalsPage.Controls.Add(splitContainer1);
+            ActiveRentalsPage.Location = new Point(4, 24);
+            ActiveRentalsPage.Name = "ActiveRentalsPage";
+            ActiveRentalsPage.Padding = new Padding(3);
+            ActiveRentalsPage.Size = new Size(796, 423);
+            ActiveRentalsPage.TabIndex = 4;
+            ActiveRentalsPage.Text = "Active rentals";
+            ActiveRentalsPage.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer1
+            // 
+            splitContainer1.Dock = DockStyle.Fill;
+            splitContainer1.Location = new Point(3, 3);
+            splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            splitContainer1.Panel1.Controls.Add(activeRentalTable);
+            // 
+            // splitContainer1.Panel2
+            // 
+            splitContainer1.Panel2.Controls.Add(activeRentalPageNumber);
+            splitContainer1.Panel2.Controls.Add(labelActiveRentalsPage);
+            splitContainer1.Panel2.Controls.Add(buttonActiveRentalsOpen);
+            splitContainer1.Size = new Size(790, 417);
+            splitContainer1.SplitterDistance = 703;
+            splitContainer1.TabIndex = 0;
+            // 
+            // activeRentalTable
+            // 
+            activeRentalTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            activeRentalTable.Dock = DockStyle.Fill;
+            activeRentalTable.Location = new Point(0, 0);
+            activeRentalTable.Name = "activeRentalTable";
+            activeRentalTable.ReadOnly = true;
+            activeRentalTable.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            activeRentalTable.Size = new Size(703, 417);
+            activeRentalTable.TabIndex = 0;
+            // 
+            // activeRentalPageNumber
+            // 
+            activeRentalPageNumber.Location = new Point(2, 391);
+            activeRentalPageNumber.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            activeRentalPageNumber.Name = "activeRentalPageNumber";
+            activeRentalPageNumber.Size = new Size(84, 23);
+            activeRentalPageNumber.TabIndex = 2;
+            activeRentalPageNumber.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            activeRentalPageNumber.ValueChanged += activeRentalPageNumber_ValueChanged;
+            // 
+            // labelActiveRentalsPage
+            // 
+            labelActiveRentalsPage.AutoSize = true;
+            labelActiveRentalsPage.Location = new Point(2, 373);
+            labelActiveRentalsPage.Name = "labelActiveRentalsPage";
+            labelActiveRentalsPage.Size = new Size(36, 15);
+            labelActiveRentalsPage.TabIndex = 1;
+            labelActiveRentalsPage.Text = "Page:";
+            // 
+            // buttonActiveRentalsOpen
+            // 
+            buttonActiveRentalsOpen.Location = new Point(3, 3);
+            buttonActiveRentalsOpen.Name = "buttonActiveRentalsOpen";
+            buttonActiveRentalsOpen.Size = new Size(75, 23);
+            buttonActiveRentalsOpen.TabIndex = 0;
+            buttonActiveRentalsOpen.Text = "Open";
+            buttonActiveRentalsOpen.UseVisualStyleBackColor = true;
+            buttonActiveRentalsOpen.Click += buttonActiveRentalsOpen_Click;
+            // 
             // MainView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(804, 451);
-            Controls.Add(tabMenu);
+            Controls.Add(menuTab);
             Name = "MainView";
             Text = "Bike Management System";
             ((System.ComponentModel.ISupportInitialize)BikeTable).EndInit();
-            tabMenu.ResumeLayout(false);
+            menuTab.ResumeLayout(false);
+            pageDashborad.ResumeLayout(false);
             BikePage.ResumeLayout(false);
             bikeSplitContainer.Panel1.ResumeLayout(false);
             bikeSplitContainer.Panel2.ResumeLayout(false);
@@ -420,13 +518,21 @@ namespace BikeManagementSystemDesktop
             typeSplitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)typeTable).EndInit();
             ((System.ComponentModel.ISupportInitialize)typeTablePageNumber).EndInit();
+            ActiveRentalsPage.ResumeLayout(false);
+            splitContainer1.Panel1.ResumeLayout(false);
+            splitContainer1.Panel2.ResumeLayout(false);
+            splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
+            splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)activeRentalTable).EndInit();
+            ((System.ComponentModel.ISupportInitialize)activeRentalPageNumber).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private TabControl tabMenu;
-        private TabPage DashboardPage;
+        private TabControl menuTab;
+        private TabPage pageDashborad;
         private TabPage BikePage;
         private TabPage VendorPage;
         private TabPage TypePage;
@@ -451,5 +557,12 @@ namespace BikeManagementSystemDesktop
         private Label labelVendorPage;
         private Label labelTypePage;
         private NumericUpDown typeTablePageNumber;
+        private Button buttonRent;
+        private TabPage ActiveRentalsPage;
+        private SplitContainer splitContainer1;
+        private DataGridView activeRentalTable;
+        private Button buttonActiveRentalsOpen;
+        private NumericUpDown activeRentalPageNumber;
+        private Label labelActiveRentalsPage;
     }
 }

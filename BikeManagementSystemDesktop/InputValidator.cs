@@ -41,5 +41,27 @@
                 return true;
             }
         }
+
+        /// <summary>
+        /// Checks if first date is before last date.
+        /// </summary>
+        /// 
+        /// <param name="first">From when we start</param>
+        /// <param name="last">When we end</param>
+        /// 
+        /// <returns>Validation status</returns>
+        public static bool ValidateDateChronology(DateTimePicker first,DateTimePicker last)
+        {
+            if(first.Value > last.Value)
+            {
+                first.CalendarTitleBackColor = Color.Red;
+                return false;
+            }
+            else
+            {
+                first.CalendarTitleBackColor = SystemColors.Window;
+                return true;
+            }
+        }
     }
 }
