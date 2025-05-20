@@ -60,11 +60,26 @@ namespace BikeManagementSystemLib.Services
         /// 
         /// <param name="pageNumber">From which page to start</param>
         /// <param name="pageSize">How many elements to take</param>
+        /// 
         /// <returns>Page prepared to fetch data</returns>
         protected IQueryable<ET> PrepareEntiytPage(int pageNumber, int pageSize)
         {
+            return PrepareEntiytPage(entitySet, pageNumber, pageSize);
+        }
+
+        /// <summary>
+        /// Creates page of entities.
+        /// </summary>
+        /// 
+        /// <param name="dbQuery">From what to create page</param>
+        /// <param name="pageNumber">From which page to start</param>
+        /// <param name="pageSize">How many elements to take</param>
+        /// 
+        /// <returns>Page prepared to fetch data</returns>
+        protected IQueryable<T> PrepareEntiytPage<T>(IQueryable<T> dbQuery,int pageNumber, int pageSize)
+        {
             int toSkip = (pageNumber - 1) * pageSize;
-            return entitySet.Skip(toSkip)
+            return dbQuery.Skip(toSkip)
                 .Take(pageSize);
         }
 
