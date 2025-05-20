@@ -4,7 +4,6 @@ using BikeManagementSystemDesktop.Views.Models;
 using BikeManagementSystemLib;
 using BikeManagementSystemLib.Models;
 using BikeManagementSystemLib.Services;
-using System.Windows.Forms;
 using Image = System.Drawing.Image;
 using ImageModel = BikeManagementSystemLib.Models.Image;
 

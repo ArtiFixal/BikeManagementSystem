@@ -1,6 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-
-namespace BikeManagementSystemDesktop.Views
+﻿namespace BikeManagementSystemDesktop.Views
 {
     public partial class SimpleEntityFrom : Form
     {
