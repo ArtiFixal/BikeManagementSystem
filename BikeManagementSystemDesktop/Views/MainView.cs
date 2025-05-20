@@ -17,6 +17,7 @@ namespace BikeManagementSystemDesktop
         private BikeTypeService typeService;
         private ClientService clientService;
         private RentalService rentalService;
+        private MaintenanceService maintenanceService;
 
         public MainView(BikeManagementDbContext context)
         {
@@ -26,6 +27,7 @@ namespace BikeManagementSystemDesktop
             typeService = new BikeTypeService(context);
             clientService = new ClientService(context);
             rentalService = new RentalService(context);
+            maintenanceService = new MaintenanceService(context);
             InitializeComponent();
             SetUpTables();
         }
@@ -35,11 +37,7 @@ namespace BikeManagementSystemDesktop
             // Bike table
             BikeTable.Columns.Add("Id", "Id");
             BikeTable.Columns.Add("Model", "Model");
-            DataGridViewImageColumn imageColumn = new DataGridViewImageColumn();
-            imageColumn.Name = "ImagePath";
-            imageColumn.HeaderText = "Image";
-            imageColumn.ImageLayout = DataGridViewImageCellLayout.Zoom;
-            BikeTable.Columns.Add(imageColumn);
+            BikeTable.Columns.Add(CreateImageColumn());
             BikeTable.Columns.Add("Vendor", "Vendor");
             BikeTable.Columns.Add("Type", "Type");
             BikeTable.Columns.Add("Available", "Available");
@@ -59,6 +57,16 @@ namespace BikeManagementSystemDesktop
             // Active Rentals
             activeRentalTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
+            // Weared bikes
+            wearedBikesTable.Columns.Add("Id", "Id");
+            wearedBikesTable.Columns.Add("Model", "Model");
+            wearedBikesTable.Columns.Add(CreateImageColumn());
+            wearedBikesTable.Columns.Add("Vendor", "Vendor");
+            wearedBikesTable.Columns.Add("Type", "Type");
+            wearedBikesTable.Columns.Add("Durability", "Durability");
+            wearedBikesTable.Columns.Add("LastMaintenanceDate", "Last maintenance date");
+            wearedBikesTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
             // Setup pages
             bikeTablePageNumber.Maximum = bikeService.GetPageCount(BikeService.DEFAULT_PAGE_SIZE) + 1;
             vendorTablePageNumber.Maximum = vendorService.GetPageCount(VendorService.DEFAULT_PAGE_SIZE) + 1;
@@ -68,6 +76,7 @@ namespace BikeManagementSystemDesktop
             ChangeVendorTablePage(1);
             ChangeTypeTablePage(1);
             ChangeActiveRentalsPage(1);
+            ChangeWearedBikesPage(1);
         }
 
         private void ChangeBikeTablePage(int page)
@@ -109,6 +118,26 @@ namespace BikeManagementSystemDesktop
                     $"{rental.Client.FirstName} {rental.Client.LastName}",
                     rental.Client.PhoneNumber, rental.RentedFrom, rental.RentedTo)
                 ).ToList();
+        }
+
+        private void ChangeWearedBikesPage(int page)
+        {
+            wearedBikesTable.Rows.Clear();
+            bikeService.GetBikesPageRequiringMaintenance(page).ForEach(bike =>
+            {
+                string imagePath = Path.Combine(ImageModel.IMAGE_DIR, bike.Image.Path);
+                Image bikeImage = Image.FromFile(imagePath);
+                wearedBikesTable.Rows.Add(bike.Id, bike.Model, bikeImage, bike.Vendor.Name, bike.Type.Name, bike.Durability, bike.LastMaintenance?.MaintenanceDate);
+            });
+        }
+
+        private DataGridViewImageColumn CreateImageColumn()
+        {
+            DataGridViewImageColumn imageColumn = new DataGridViewImageColumn();
+            imageColumn.Name = "ImagePath";
+            imageColumn.HeaderText = "Image";
+            imageColumn.ImageLayout = DataGridViewImageCellLayout.Zoom;
+            return imageColumn;
         }
 
         /// <summary>
@@ -308,14 +337,14 @@ namespace BikeManagementSystemDesktop
         private void buttonActiveRentalsOpen_Click(object sender, EventArgs e)
         {
             var selectedRow = activeRentalTable.SelectedRows;
-            if(selectedRow.Count==0)
+            if (selectedRow.Count == 0)
             {
                 GuiUtils.ShowError(this, "First select acitve rental to open");
                 return;
             }
             long rentalID = (long)selectedRow[0].Cells[0].Value;
-            Rental toOpen=rentalService.GetEntity(rentalID);
-            ActiveRentalForm activeRental=new ActiveRentalForm(toOpen,rentalService);
+            Rental toOpen = rentalService.GetEntity(rentalID);
+            ActiveRentalForm activeRental = new ActiveRentalForm(toOpen, rentalService);
             activeRental.Owner = this;
             activeRental.OnClose += (allBikesReturned) =>
             {
@@ -323,6 +352,31 @@ namespace BikeManagementSystemDesktop
                     ChangeActiveRentalsPage((int)activeRentalPageNumber.Value);
             };
             activeRental.ShowDialog();
+        }
+
+        private void wearedBikesTablePage_ValueChanged(object sender, EventArgs e)
+        {
+            int page = (int)wearedBikesTablePage.Value;
+            ChangeWearedBikesPage(page);
+        }
+
+        private void buttonMaintenanceBike_Click(object sender, EventArgs e)
+        {
+            var selectedRow=wearedBikesTable.SelectedRows;
+            if (selectedRow.Count == 0)
+            {
+                GuiUtils.ShowError(this, "You must select bike first");
+                return;
+            }
+            long bikeID = (long)selectedRow[0].Cells[0].Value;
+            Bike toMaintenance=bikeService.GetEntity(bikeID);
+            BikeMaintenanceForm maintenanceForm = new BikeMaintenanceForm(toMaintenance, maintenanceService);
+            maintenanceForm.Owner=this;
+            maintenanceForm.OnSubmit+=() =>
+            {
+                wearedBikesTable.Rows.RemoveAt(selectedRow[0].Index);
+            };
+            maintenanceForm.ShowDialog();
         }
     }
 }
