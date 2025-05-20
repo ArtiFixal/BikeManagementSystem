@@ -33,5 +33,10 @@ namespace BikeManagementSystemLib.Models
             LastName = lastName;
             PhoneNumber = phoneNumber;
         }
+
+        public override string ToString()
+        {
+            return $"{FirstName} {LastName} - {PhoneNumber}";
+        }
     }
 }
