@@ -64,9 +64,9 @@ BEGIN TRY
     SET IDENTITY_INSERT Images ON;
 
     INSERT INTO Images (Id, Path) VALUES
-    (1,'cross.png'),
-    (2,'city.png'),
-    (3,'mtb.png');
+    (1,'cross.jpg'),
+    (2,'city.jpg'),
+    (3,'mtb.jpg');
 
     SET IDENTITY_INSERT Images OFF;
 	SET IDENTITY_INSERT Bikes ON;
