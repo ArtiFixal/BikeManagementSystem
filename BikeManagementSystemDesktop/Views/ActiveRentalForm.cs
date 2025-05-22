@@ -17,6 +17,7 @@ namespace BikeManagementSystemDesktop.Views
             this.rentalService = rentalService;
             currentRental = rental;
             InitializeComponent();
+            rentedBikes.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.AllCells;
             labelClient.Text = $"{rental.Client.FirstName} {rental.Client.LastName}";
             labelPhoneNumber.Text = rental.Client.PhoneNumber;
             labelClientId.Text = rental.Client.IdentityNumber;
