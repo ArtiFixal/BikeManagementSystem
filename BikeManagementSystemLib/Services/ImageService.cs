@@ -7,7 +7,11 @@ namespace BikeManagementSystemLib.Services
     /// </summary>
     public class ImageService : CrudService<long, Image>
     {
-        public ImageService(BikeManagementDbContext context) : base(context,context.Images){}      
+        public ImageService(BikeManagementDbContext context) : base(context,context.Images)
+        {
+            if (!Directory.Exists(Image.IMAGE_DIR))
+                Directory.CreateDirectory(Image.IMAGE_DIR);
+        }      
 
         /// <summary>
         /// Moves file to the <see cref="Image.IMAGE_DIR"/> 
@@ -22,6 +26,7 @@ namespace BikeManagementSystemLib.Services
             string formatedDateNow = DateTime.Now.ToString("yyyyMMddHHmmss");
             string fileName = Path.GetFileNameWithoutExtension(image.Path) + 
                 '_' + formatedDateNow + Path.GetExtension(image.Path);
+            image.Path = fileName;
             string finalPath = Path.Combine(Image.IMAGE_DIR, fileName);
             File.Copy(image.Path, finalPath);
             return finalPath;
@@ -34,16 +39,25 @@ namespace BikeManagementSystemLib.Services
 
         public override long AddEntity(Image entity)
         {
-            long imageId = base.AddEntity(entity);
-            entity.Path = MoveFile(entity);
-            return imageId;
+            string movedPath=MoveFile(entity);
+            try
+            {
+                long imageId = base.AddEntity(entity);
+                return imageId;
+            }
+            catch(Exception)
+            {
+                File.Delete(movedPath);
+                throw;
+            }
         }
 
         public override Image EditEntity(Image entity)
         {
             Image oldImage = GetEntity(entity.Id);
             Image updatedImage = base.EditEntity(entity);
-            File.Delete(oldImage.Path);
+            string oldImagePath = Path.Combine(Image.IMAGE_DIR, oldImage.Path);
+            File.Delete(oldImagePath);
             MoveFile(entity);
             return updatedImage;
         }
@@ -51,7 +65,7 @@ namespace BikeManagementSystemLib.Services
         public override void DeleteEntity(long entityID)
         {
             Image image = GetEntity(entityID);
-            string imagePath=image.Path;
+            string imagePath=Path.Combine(Image.IMAGE_DIR,image.Path);
             context.Images.Remove(image);
             File.Delete(imagePath);
         }
