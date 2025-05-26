@@ -1,5 +1,6 @@
 ﻿using BikeManagementSystemLib.Exceptions;
 using BikeManagementSystemLib.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BikeManagementSystemLib.Services
 {
@@ -16,11 +17,22 @@ namespace BikeManagementSystemLib.Services
         public Maintenance MaintenanceBike(long bikeId, DateTime maintenanceDate, string maintenanceDescription)
         {
             Maintenance maintenance = new Maintenance(bikeId, maintenanceDate, maintenanceDescription);
-            Bike bike = context.Bikes.First(bike => bike.Id == bikeId) ??
+            Bike bike = context.Bikes.FirstOrDefault(bike => bike.Id == bikeId) ??
                 throw new EntityNotFoundException("Bike", bikeId);
             bike.LastMaintenance = maintenance;
             bike.Durability = 100;
             context.SaveChanges();
+            return maintenance;
+        }
+
+        public async Task<Maintenance> MaintenanceBikeAsync(long bikeId, DateTime maintenanceDate, string maintenanceDescription)
+        {
+            Maintenance maintenance = new Maintenance(bikeId, maintenanceDate, maintenanceDescription);
+            Bike bike = await context.Bikes.FirstOrDefaultAsync(bike => bike.Id == bikeId).ConfigureAwait(false) ??
+                throw new EntityNotFoundException("Bike", bikeId);
+            bike.LastMaintenance = maintenance;
+            bike.Durability = 100;
+            await context.SaveChangesAsync().ConfigureAwait(false);
             return maintenance;
         }
     }

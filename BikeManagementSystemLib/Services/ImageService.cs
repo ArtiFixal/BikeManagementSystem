@@ -39,34 +39,79 @@ namespace BikeManagementSystemLib.Services
 
         public override long AddEntity(Image entity)
         {
-            string movedPath=MoveFile(entity);
+            string movedPath = MoveFile(entity);
             try
             {
                 long imageId = base.AddEntity(entity);
                 return imageId;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 File.Delete(movedPath);
                 throw;
             }
         }
 
+        public override async Task<long> AddEntityAsync(Image entity)
+        {
+            string movedPath = MoveFile(entity);
+            try
+            {
+                long imageId = await base.AddEntityAsync(entity)
+                    .ConfigureAwait(false);
+                return imageId;
+            }
+            catch (Exception)
+            {
+                File.Delete(movedPath);
+                throw;
+            }
+        }
+
+        protected void ReplaceOldImage(Image oldImage,Image updatedImage)
+        {
+            string oldImagePath = Path.Combine(Image.IMAGE_DIR, oldImage.Path);
+            File.Delete(oldImagePath);
+            MoveFile(updatedImage);
+        }
+
         public override Image EditEntity(Image entity)
         {
             Image oldImage = GetEntity(entity.Id);
             Image updatedImage = base.EditEntity(entity);
-            string oldImagePath = Path.Combine(Image.IMAGE_DIR, oldImage.Path);
-            File.Delete(oldImagePath);
-            MoveFile(entity);
+            ReplaceOldImage(oldImage, updatedImage);
             return updatedImage;
+        }
+
+        public override async Task<Image> EditEntityAsync(Image entity)
+        {
+            Image oldImage = GetEntity(entity.Id);
+            Image updatedImage = await base.EditEntityAsync(entity)
+                .ConfigureAwait(false);
+            ReplaceOldImage(oldImage, updatedImage);
+            return updatedImage;
+        }
+
+        protected string RemoveImageFromContext(long entityID)
+        {
+            Image image = GetEntity(entityID);
+            string imagePath = Path.Combine(Image.IMAGE_DIR, image.Path);
+            context.Images.Remove(image);
+            return imagePath;
         }
 
         public override void DeleteEntity(long entityID)
         {
-            Image image = GetEntity(entityID);
-            string imagePath=Path.Combine(Image.IMAGE_DIR,image.Path);
-            context.Images.Remove(image);
+            string imagePath = RemoveImageFromContext(entityID);
+            context.SaveChanges();
+            File.Delete(imagePath);
+        }
+
+        public override async Task DeleteEntityAsync(long entityID)
+        {
+            string imagePath = RemoveImageFromContext(entityID);
+            await context.SaveChangesAsync()
+                .ConfigureAwait(false);
             File.Delete(imagePath);
         }
     }

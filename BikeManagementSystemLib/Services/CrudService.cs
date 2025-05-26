@@ -44,14 +44,39 @@ namespace BikeManagementSystemLib.Services
                 ?? throw new EntityNotFoundException(entityName,entityID);
         }
 
+        /// <summary>
+        /// Retreives entity from DB asynchronously.
+        /// </summary>
+        /// 
+        /// <exception cref="BikeManagementSystemLib.Exceptions.EntityNotFoundException">If entity was not found</exception>
+        /// <returns>Entity from DB</returns>
+        public virtual async Task<ET> GetEntityAsync(ID entityID)
+        {
+            return await entitySet.FirstOrDefaultAsync(entity => entity.Id.Equals(entityID)).ConfigureAwait(false)
+                ?? throw new EntityNotFoundException(entityName, entityID);
+        }
+
         public long CountEntities()
         {
-            return entitySet.Count();
+            return entitySet.LongCount();
+        }
+
+        public Task<long> CountEntitiesAysnc()
+        { 
+            return entitySet.LongCountAsync();
         }
 
         public int GetPageCount(int pageSize)
         {
             return (int)(CountEntities() / pageSize);
+        }
+
+        public async Task<int> GetPageCountAsync(int pageSize)
+        {
+            long count = await CountEntitiesAysnc()
+                .ConfigureAwait(false);
+            return (int)(count / pageSize);
+
         }
 
         /// <summary>
@@ -96,9 +121,27 @@ namespace BikeManagementSystemLib.Services
                 .ToList();
         }
 
+        /// <summary>
+        /// Retreives page of entities from DB asynchronously.
+        /// </summary>
+        /// 
+        /// <param name="pageNumber">Which page</param>
+        /// <param name="pageSize">How many elements to get</param>
+        /// <returns>Page of entities</returns>
+        public virtual Task<List<ET>> GetEntityPageAsync(int pageNumber,int pageSize)
+        {
+            return PrepareEntiytPage(pageNumber,pageSize)
+                .ToListAsync();
+        }
+
         public virtual List<ET> GetAllEntities()
         {
             return entitySet.ToList();
+        }
+
+        public virtual Task<List<ET>> GetAllEntitiesAsync()
+        {
+            return entitySet.ToListAsync();
         }
 
         public virtual ID AddEntity(ET entity)
@@ -108,10 +151,26 @@ namespace BikeManagementSystemLib.Services
             return toAdd.Entity.Id;
         }
 
+        public virtual async Task<ID> AddEntityAsync(ET entity)
+        {
+            var toAdd=await context.AddAsync(entity);
+            await context.SaveChangesAsync()
+                .ConfigureAwait(false);
+            return toAdd.Entity.Id;
+        }
+
         public virtual ET EditEntity(ET entity)
         {
             ET updated=context.Update(entity).Entity;
             context.SaveChanges();
+            return updated;
+        }
+
+        public virtual async Task<ET> EditEntityAsync(ET entity)
+        {
+            ET updated = context.Update(entity).Entity;
+            await context.SaveChangesAsync()
+                .ConfigureAwait(false);
             return updated;
         }
 
@@ -125,6 +184,31 @@ namespace BikeManagementSystemLib.Services
             ET entity = GetEntity(entityID);
             context.Remove(entity);
             context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Deletes entity from DB asynchronously.
+        /// </summary>
+        /// 
+        /// <exception cref="BikeManagementSystemLib.Exceptions.EntityNotFoundException">If entity was not found</exception>
+        public virtual async Task DeleteEntityAsync(ID entityID)
+        {
+            ET entity=await GetEntityAsync(entityID)
+                .ConfigureAwait(false);
+            context.Remove(entity);
+            await context.SaveChangesAsync()
+                .ConfigureAwait(false);
+        }
+
+        public bool Exists(ID entityID)
+        {
+            return entitySet.Any(et => et.Id.Equals(entityID));
+        }
+
+        public async Task<bool> ExistsAsync(ID entityID)
+        {
+            return await entitySet.AnyAsync(et => et.Id.Equals(entityID))
+                .ConfigureAwait(false);
         }
     }
 }
