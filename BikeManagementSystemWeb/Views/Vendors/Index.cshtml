@@ -1,5 +1,4 @@
-﻿@using BikeManagementSystemWeb.Models.PageViewModels
-@model Page<BikeManagementSystemLib.Models.Vendor>
+﻿@model IEnumerable<BikeManagementSystemLib.Models.Vendor>
 
 @{
     ViewData["Title"] = "Index";
@@ -14,16 +13,16 @@
     <thead>
         <tr>
             <th>
-                Id
+                @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                Name
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Items) {
+        @foreach (var item in Model) {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Id)
@@ -41,11 +40,4 @@
     </tbody>
 </table>
 
-@{
-    var page = new PagingViewModel
-    {
-        CurrentPage=Model.CurrentPage,
-        MaxPage=Model.MaxPage
-    };
-}
-@await Html.PartialAsync("_Paging", page)
+@await Html.PartialAsync("_Paging", ViewData["page"])

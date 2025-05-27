@@ -1,7 +1,7 @@
 ﻿using BikeManagementSystemLib.Exceptions;
 using BikeManagementSystemLib.Models;
 using BikeManagementSystemLib.Services;
-using BikeManagementSystemWeb.Models;
+using BikeManagementSystemWeb.Models.PageViewModels;
 using BikeManagementSystemWeb.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,8 +27,12 @@ namespace BikeManagementSystemWeb.Controllers
         {
             int pageSize = CrudService<ID, ET>.DEFAULT_PAGE_SIZE;
             int maxPage=await service.GetPageCountAsync(pageSize)+1;
-            Page<ET> pageable=new(page,maxPage, await service.GetEntityPageAsync(page, pageSize));
-            return View(pageable);
+            ViewData["page"] = new PagingViewModel()
+            {
+                CurrentPage = page,
+                MaxPage= maxPage,
+            };
+            return View(await service.GetEntityPageAsync(page, pageSize));
         }
 
         // GET: Entit/5/Details
