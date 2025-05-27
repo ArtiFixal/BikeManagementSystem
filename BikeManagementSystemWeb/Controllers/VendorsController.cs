@@ -14,11 +14,6 @@ namespace BikeManagementSystemWeb.Controllers
             return base.Index(page);
         }
 
-        protected override void BindViewData(Vendor? entity = null)
-        {
-            // Nothing to bind, entity to simple
-        }
-
         protected override Vendor MapViewModelToEntity(VendorViewModel viewModel)
         {
             return new Vendor(viewModel.Id??0, viewModel.Name);

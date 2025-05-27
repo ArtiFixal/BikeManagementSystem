@@ -51,15 +51,18 @@ namespace BikeManagementSystemWeb.Controllers
         /// <summary>
         /// Binds required child entities to the <see cref="Controller.ViewData"/>.
         /// </summary>
-        protected abstract void BindViewData(ET? entity=null);
+        protected virtual Task BindViewData(ET? entity = null)
+        {
+            return Task.CompletedTask;
+        }
 
         protected abstract ET MapViewModelToEntity(VM viewModel);
 
         // GET: Entity/Create
         [HttpGet("Create")]
-        public virtual IActionResult Create()
+        public virtual async Task<IActionResult> Create()
         {
-            BindViewData();
+            await BindViewData();
             return View();
         }
 
@@ -74,7 +77,7 @@ namespace BikeManagementSystemWeb.Controllers
                 await service.AddEntityAsync(entity);
                 return RedirectToAction(nameof(Index));
             }
-            BindViewData();
+            await BindViewData();
             return View(viewModel);
         }
 
@@ -87,7 +90,7 @@ namespace BikeManagementSystemWeb.Controllers
             try
             {
                 var toEdit = await service.GetEntityAsync(id);
-                BindViewData();
+                await BindViewData();
                 return View(toEdit);
             }
             catch (EntityNotFoundException e)
@@ -118,7 +121,7 @@ namespace BikeManagementSystemWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            BindViewData();
+            await BindViewData();
             return View(viewModel);
         }
 
