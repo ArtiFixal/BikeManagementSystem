@@ -11,7 +11,14 @@ namespace BikeManagementSystemLib.Services
         {
             if (!Directory.Exists(Image.IMAGE_DIR))
                 Directory.CreateDirectory(Image.IMAGE_DIR);
-        }      
+        }
+
+        protected string GetUniqueFilename(string imagePath)
+        {
+            string formatedDateNow = DateTime.Now.ToString("yyyyMMddHHmmss");
+            return Path.GetFileNameWithoutExtension(imagePath) +
+                '_' + formatedDateNow + Path.GetExtension(imagePath);
+        }
 
         /// <summary>
         /// Moves file to the <see cref="Image.IMAGE_DIR"/> 
@@ -23,9 +30,7 @@ namespace BikeManagementSystemLib.Services
         /// <returns>Path to moved file</returns>
         private string MoveFile(Image image)
         {
-            string formatedDateNow = DateTime.Now.ToString("yyyyMMddHHmmss");
-            string fileName = Path.GetFileNameWithoutExtension(image.Path) + 
-                '_' + formatedDateNow + Path.GetExtension(image.Path);
+            string fileName = GetUniqueFilename(image.Path);
             image.Path = fileName;
             string finalPath = Path.Combine(Image.IMAGE_DIR, fileName);
             File.Copy(image.Path, finalPath);
