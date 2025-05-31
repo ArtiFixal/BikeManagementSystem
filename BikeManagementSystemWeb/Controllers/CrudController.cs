@@ -61,6 +61,7 @@ namespace BikeManagementSystemWeb.Controllers
         }
 
         protected abstract ET MapViewModelToEntity(VM viewModel);
+        protected abstract VM MapEntityToViewModel(ET entity);
 
         // GET: Entity/Create
         [HttpGet("Create")]
@@ -94,8 +95,9 @@ namespace BikeManagementSystemWeb.Controllers
             try
             {
                 var toEdit = await service.GetEntityAsync(id);
+                VM toEditViewModel=MapEntityToViewModel(toEdit);
                 await BindViewData();
-                return View(toEdit);
+                return View(toEditViewModel);
             }
             catch (EntityNotFoundException e)
             {

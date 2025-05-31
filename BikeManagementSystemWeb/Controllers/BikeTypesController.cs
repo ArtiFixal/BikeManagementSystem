@@ -8,6 +8,15 @@ namespace BikeManagementSystemWeb.Controllers
     {
         public BikeTypesController(BikeTypeService service) : base(service){}
 
+        protected override BikeTypeViewModel MapEntityToViewModel(BikeType entity)
+        {
+            return new BikeTypeViewModel()
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+            };
+        }
+
         protected override BikeType MapViewModelToEntity(BikeTypeViewModel viewModel)
         {
             return new BikeType(viewModel.Id??0,viewModel.Name);

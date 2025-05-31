@@ -14,6 +14,15 @@ namespace BikeManagementSystemWeb.Controllers
             return base.Index(page);
         }
 
+        protected override VendorViewModel MapEntityToViewModel(Vendor entity)
+        {
+            return new VendorViewModel()
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+            };
+        }
+
         protected override Vendor MapViewModelToEntity(VendorViewModel viewModel)
         {
             return new Vendor(viewModel.Id??0, viewModel.Name);
