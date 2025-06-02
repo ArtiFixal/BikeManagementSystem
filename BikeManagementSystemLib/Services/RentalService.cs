@@ -1,7 +1,6 @@
 ﻿using BikeManagementSystemLib.Exceptions;
 using BikeManagementSystemLib.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace BikeManagementSystemLib.Services
 {
@@ -146,6 +145,18 @@ namespace BikeManagementSystemLib.Services
             return await LookForActiveRentals()
                 .CountAsync()
                 .ConfigureAwait(false) / pageSize;
+        }
+
+        public bool RentalHasBike(long rentalID, long bikeID)
+        {
+            return context.RentedBikes.Any(bike => bike.RentalId == rentalID && bike.BikeId == bikeID);
+        }
+
+        public async Task<bool> RentalHasBikeAsync(long rentalID,long bikeID)
+        {
+            return await context.RentedBikes.AnyAsync(
+                bike => bike.RentalId == rentalID && bike.BikeId == bikeID)
+                .ConfigureAwait(false);
         }
     }
 }
