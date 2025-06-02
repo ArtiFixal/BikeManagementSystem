@@ -20,6 +20,8 @@ namespace BikeManagementSystemLib.Models
         public virtual Client Client { get; set; }
         public virtual ICollection<RentedBike> RentedBikes { get; set; } = [];
 
+        public Rental() : base(0) { }
+
         public Rental(long clientID, DateTime rentedFrom, DateTime rentedTo) : this(0, clientID, rentedFrom, rentedTo, false) {}
 
         public Rental(long id,long clientID, DateTime rentedFrom, DateTime rentedTo, bool allBikesReturned): base(id)
