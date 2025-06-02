@@ -1,5 +1,6 @@
 using BikeManagementSystemLib;
 using BikeManagementSystemLib.Services;
+using BikeManagementSystemWeb.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<VendorService>();
 builder.Services.AddScoped<BikeTypeService>();
+builder.Services.AddScoped<ImageServiceExtended>();
+builder.Services.AddScoped<BikeService>();
 
 builder.Services.AddDbContext<BikeManagementDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))

@@ -1,0 +1,49 @@
+﻿@model BikeManagementSystemWeb.Models.ViewModels.BikeViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Bike</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Model" class="control-label"></label>
+                <input asp-for="Model" class="form-control" />
+                <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <img id="imagePreview" alt="Bike image preview" style="display:none"/>
+            </div>
+            <div class="form-group">
+                <label for="ImageFile" class="control-label">Image:</label>
+                <input id="imageFile" asp-for="ImageFile" type="file" accept="image/*" />
+            </div>
+            <div class="form-group">
+                <label for="VendorId" class="control-label">Vendor</label>
+                <select asp-for="VendorId" class ="form-control" asp-items="ViewBag.VendorId"></select>
+            </div>
+            <div class="form-group">
+                <label for="TypeId" class="control-label">Type</label>
+                <select asp-for="TypeId" class ="form-control" asp-items="ViewBag.TypeId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_ImagePreview");}
+}

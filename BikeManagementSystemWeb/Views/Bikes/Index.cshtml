@@ -1,0 +1,74 @@
+﻿@using BikeManagementSystemLib.Models
+@model IEnumerable<BikeManagementSystemLib.Models.Bike>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vendor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsAvailable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Durability)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastMaintenance)
+            </th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                <img class="tableImage" src="/Images/@item.Image.Id" alt="@item.Model image" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vendor.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsAvailable)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Durability)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastMaintenance.MaintenanceDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@await Html.PartialAsync("_Paging", ViewData["page"])

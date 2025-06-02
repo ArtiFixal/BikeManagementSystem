@@ -29,3 +29,9 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+#imagePreview {
+    max-height: 50vh;
+}
+.tableImage{
+    max-height: 20vh;
+}
