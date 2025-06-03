@@ -1,0 +1,60 @@
+﻿@using BikeManagementSystemLib.Models
+@model BikeManagementSystemWeb.Models.ViewModels.MaintenanceViewModel
+
+@{
+    ViewData["Title"] = "Bike maintenance";
+    Bike bike = (Bike)ViewData["bike"];
+}
+
+<h1>Bike maintenance</h1>
+
+<h4>Maintenance</h4>
+<hr/>
+<dl class="row">
+    <dt class="col-sm-2">
+        ID:
+    </dt>
+    <dd class="col-sm-10">
+        @bike.Id
+    </dd>
+    <dt class="col-sm-2">
+        Model:
+    </dt>
+    <dd class="col-sm-10">
+        @bike.Model
+    </dd>
+    <dt class="col-sm-2">
+        Vendor:
+    </dt>
+    <dd class="col-sm-10">
+        @bike.Vendor.Name
+    </dd>
+    <dt class="col-sm-2">
+        Type:
+    </dt>
+    <dd class="col-sm-10">
+        @bike.Type.Name
+    </dd>
+    <dt class="col-sm-2">
+        Image:
+    </dt>
+    <dd class="col-sm-10">
+        <img id="imagePreview" src="/Images/@bike.Image.Id" alt="@bike.Vendor @bike.Model image" />
+    </dd>
+</dl>
+
+<form asp-action="Maintenance">
+    <div class="form-group col-md-4">
+        <label asp-for="MaintenanceDate" class="control-label"></label>
+        <input asp-for="MaintenanceDate" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Maintenance" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+    <input asp-for="BikeId" type="hidden" value="@bike.Id"/>
+</form>

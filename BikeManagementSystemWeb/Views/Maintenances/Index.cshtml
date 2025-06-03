@@ -1,0 +1,68 @@
+﻿@model IEnumerable<BikeManagementSystemWeb.Models.ViewModels.BikeToMaintenanceViewModel>
+
+@{
+    ViewData["Title"] = "Worn bikes";
+}
+
+<h1>Worn bikes</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Model
+            </th>
+            <th>
+                Image
+            </th>
+            <th>
+                Vendor
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Durability
+            </th>
+            <th>
+                Last maintenance date
+            </th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem=>item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                <img src="/Images/@item.ImageId" alt="@item.Vendor @item.Model image" class="tableImage" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vendor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Durability)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastMaintenance)
+            </td>
+            <td>
+                <a asp-action="MaintenanceBike" asp-route-bikeID="@item.Id">Maintenance</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@await Html.PartialAsync("_Paging", ViewData["page"])

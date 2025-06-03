@@ -1,0 +1,74 @@
+﻿@using BikeManagementSystemLib.Models
+@model IEnumerable<BikeManagementSystemWeb.Models.ViewModels.MaintenanceViewModel>
+
+@{
+    ViewData["Title"] = "Bike maintenances";
+    Bike bike = (Bike)ViewData["bike"];
+}
+
+<dl class="row">
+    <dt class="col-sm-2">
+        ID:
+    </dt>
+    <dd class="col-sm-10">
+        @bike.Id
+    </dd>
+    <dt class="col-sm-2">
+        Model:
+    </dt>
+    <dd class="col-sm-10">
+        @bike.Model
+    </dd>
+    <dt class="col-sm-2">
+        Vendor:
+    </dt>
+    <dd class="col-sm-10">
+        @bike.Vendor.Name
+    </dd>
+    <dt class="col-sm-2">
+        Type:
+    </dt>
+    <dd class="col-sm-10">
+        @bike.Type.Name
+    </dd>
+    <dt class="col-sm-2">
+        Image:
+    </dt>
+    <dd class="col-sm-10">
+        <img id="imagePreview" src="/Images/@bike.Image.Id" alt="@bike.Vendor @bike.Model image" />
+    </dd>
+</dl>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaintenanceDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaintenanceDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-controller="Bikes" asp-action="Index" class="btn btn-primary">Back</a>
