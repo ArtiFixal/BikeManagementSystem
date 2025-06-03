@@ -37,14 +37,12 @@ namespace BikeManagementSystemLib
                 .HasForeignKey(bike => bike.ImageId);
 
                 entity.HasOne(bike => bike.LastMaintenance)
-                .WithOne(maintenance => maintenance.Bike)
+                .WithOne()
                 .HasForeignKey<Bike>(bike => bike.LastMaintenanceId)
-                .HasPrincipalKey<Maintenance>(maintenance=>maintenance.BikeId)
                 .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Maintenance>(entity => {
-                entity.Ignore(maintenance=>maintenance.Bike);
                 entity.HasOne(Maintenance => Maintenance.Bike)
                 .WithMany(bike => bike.Maintenances)
                 .HasForeignKey(bike => bike.BikeId)
