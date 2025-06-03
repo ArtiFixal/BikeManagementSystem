@@ -65,11 +65,11 @@ namespace BikeManagementSystemDesktop
             activeRentalPageNumber = new NumericUpDown();
             labelActiveRentalsPage = new Label();
             buttonActiveRentalsOpen = new Button();
-            WearedBikesPage = new TabPage();
+            WornBikesPage = new TabPage();
             wearedBikesSplitContainer = new SplitContainer();
-            wearedBikesTable = new DataGridView();
-            wearedBikesTablePage = new NumericUpDown();
-            labelWearedBikesPage = new Label();
+            wornBikesTable = new DataGridView();
+            wornBikesTablePage = new NumericUpDown();
+            labelWornBikesPage = new Label();
             buttonMaintenanceBike = new Button();
             ((System.ComponentModel.ISupportInitialize)BikeTable).BeginInit();
             menuTab.SuspendLayout();
@@ -101,13 +101,13 @@ namespace BikeManagementSystemDesktop
             activeRentalSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)activeRentalTable).BeginInit();
             ((System.ComponentModel.ISupportInitialize)activeRentalPageNumber).BeginInit();
-            WearedBikesPage.SuspendLayout();
+            WornBikesPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)wearedBikesSplitContainer).BeginInit();
             wearedBikesSplitContainer.Panel1.SuspendLayout();
             wearedBikesSplitContainer.Panel2.SuspendLayout();
             wearedBikesSplitContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)wearedBikesTable).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)wearedBikesTablePage).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)wornBikesTable).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)wornBikesTablePage).BeginInit();
             SuspendLayout();
             // 
             // BikeTable
@@ -130,7 +130,7 @@ namespace BikeManagementSystemDesktop
             menuTab.Controls.Add(VendorPage);
             menuTab.Controls.Add(TypePage);
             menuTab.Controls.Add(ActiveRentalsPage);
-            menuTab.Controls.Add(WearedBikesPage);
+            menuTab.Controls.Add(WornBikesPage);
             menuTab.Dock = DockStyle.Fill;
             menuTab.Location = new Point(0, 0);
             menuTab.Name = "menuTab";
@@ -498,16 +498,16 @@ namespace BikeManagementSystemDesktop
             buttonActiveRentalsOpen.UseVisualStyleBackColor = true;
             buttonActiveRentalsOpen.Click += buttonActiveRentalsOpen_Click;
             // 
-            // WearedBikesPage
+            // WornBikesPage
             // 
-            WearedBikesPage.Controls.Add(wearedBikesSplitContainer);
-            WearedBikesPage.Location = new Point(4, 24);
-            WearedBikesPage.Name = "WearedBikesPage";
-            WearedBikesPage.Padding = new Padding(3);
-            WearedBikesPage.Size = new Size(796, 423);
-            WearedBikesPage.TabIndex = 5;
-            WearedBikesPage.Text = "Weared bikes";
-            WearedBikesPage.UseVisualStyleBackColor = true;
+            WornBikesPage.Controls.Add(wearedBikesSplitContainer);
+            WornBikesPage.Location = new Point(4, 24);
+            WornBikesPage.Name = "WornBikesPage";
+            WornBikesPage.Padding = new Padding(3);
+            WornBikesPage.Size = new Size(796, 423);
+            WornBikesPage.TabIndex = 5;
+            WornBikesPage.Text = "Worn bikes";
+            WornBikesPage.UseVisualStyleBackColor = true;
             // 
             // wearedBikesSplitContainer
             // 
@@ -517,48 +517,48 @@ namespace BikeManagementSystemDesktop
             // 
             // wearedBikesSplitContainer.Panel1
             // 
-            wearedBikesSplitContainer.Panel1.Controls.Add(wearedBikesTable);
+            wearedBikesSplitContainer.Panel1.Controls.Add(wornBikesTable);
             // 
             // wearedBikesSplitContainer.Panel2
             // 
-            wearedBikesSplitContainer.Panel2.Controls.Add(wearedBikesTablePage);
-            wearedBikesSplitContainer.Panel2.Controls.Add(labelWearedBikesPage);
+            wearedBikesSplitContainer.Panel2.Controls.Add(wornBikesTablePage);
+            wearedBikesSplitContainer.Panel2.Controls.Add(labelWornBikesPage);
             wearedBikesSplitContainer.Panel2.Controls.Add(buttonMaintenanceBike);
             wearedBikesSplitContainer.Size = new Size(790, 417);
             wearedBikesSplitContainer.SplitterDistance = 698;
             wearedBikesSplitContainer.TabIndex = 0;
             // 
-            // wearedBikesTable
+            // wornBikesTable
             // 
-            wearedBikesTable.AllowUserToAddRows = false;
-            wearedBikesTable.AllowUserToDeleteRows = false;
-            wearedBikesTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            wearedBikesTable.Dock = DockStyle.Fill;
-            wearedBikesTable.Location = new Point(0, 0);
-            wearedBikesTable.Name = "wearedBikesTable";
-            wearedBikesTable.ReadOnly = true;
-            wearedBikesTable.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            wearedBikesTable.Size = new Size(698, 417);
-            wearedBikesTable.TabIndex = 0;
+            wornBikesTable.AllowUserToAddRows = false;
+            wornBikesTable.AllowUserToDeleteRows = false;
+            wornBikesTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            wornBikesTable.Dock = DockStyle.Fill;
+            wornBikesTable.Location = new Point(0, 0);
+            wornBikesTable.Name = "wornBikesTable";
+            wornBikesTable.ReadOnly = true;
+            wornBikesTable.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            wornBikesTable.Size = new Size(698, 417);
+            wornBikesTable.TabIndex = 0;
             // 
-            // wearedBikesTablePage
+            // wornBikesTablePage
             // 
-            wearedBikesTablePage.Location = new Point(2, 391);
-            wearedBikesTablePage.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            wearedBikesTablePage.Name = "wearedBikesTablePage";
-            wearedBikesTablePage.Size = new Size(86, 23);
-            wearedBikesTablePage.TabIndex = 2;
-            wearedBikesTablePage.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            wearedBikesTablePage.ValueChanged += wearedBikesTablePage_ValueChanged;
+            wornBikesTablePage.Location = new Point(2, 391);
+            wornBikesTablePage.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            wornBikesTablePage.Name = "wornBikesTablePage";
+            wornBikesTablePage.Size = new Size(86, 23);
+            wornBikesTablePage.TabIndex = 2;
+            wornBikesTablePage.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            wornBikesTablePage.ValueChanged += wornBikesTablePage_ValueChanged;
             // 
-            // labelWearedBikesPage
+            // labelWornBikesPage
             // 
-            labelWearedBikesPage.AutoSize = true;
-            labelWearedBikesPage.Location = new Point(1, 373);
-            labelWearedBikesPage.Name = "labelWearedBikesPage";
-            labelWearedBikesPage.Size = new Size(36, 15);
-            labelWearedBikesPage.TabIndex = 1;
-            labelWearedBikesPage.Text = "Page:";
+            labelWornBikesPage.AutoSize = true;
+            labelWornBikesPage.Location = new Point(1, 373);
+            labelWornBikesPage.Name = "labelWornBikesPage";
+            labelWornBikesPage.Size = new Size(36, 15);
+            labelWornBikesPage.TabIndex = 1;
+            labelWornBikesPage.Text = "Page:";
             // 
             // buttonMaintenanceBike
             // 
@@ -612,14 +612,14 @@ namespace BikeManagementSystemDesktop
             activeRentalSplitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)activeRentalTable).EndInit();
             ((System.ComponentModel.ISupportInitialize)activeRentalPageNumber).EndInit();
-            WearedBikesPage.ResumeLayout(false);
+            WornBikesPage.ResumeLayout(false);
             wearedBikesSplitContainer.Panel1.ResumeLayout(false);
             wearedBikesSplitContainer.Panel2.ResumeLayout(false);
             wearedBikesSplitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)wearedBikesSplitContainer).EndInit();
             wearedBikesSplitContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)wearedBikesTable).EndInit();
-            ((System.ComponentModel.ISupportInitialize)wearedBikesTablePage).EndInit();
+            ((System.ComponentModel.ISupportInitialize)wornBikesTable).EndInit();
+            ((System.ComponentModel.ISupportInitialize)wornBikesTablePage).EndInit();
             ResumeLayout(false);
         }
 
@@ -658,11 +658,11 @@ namespace BikeManagementSystemDesktop
         private Button buttonActiveRentalsOpen;
         private NumericUpDown activeRentalPageNumber;
         private Label labelActiveRentalsPage;
-        private TabPage WearedBikesPage;
+        private TabPage WornBikesPage;
         private SplitContainer wearedBikesSplitContainer;
-        private DataGridView wearedBikesTable;
-        private NumericUpDown wearedBikesTablePage;
-        private Label labelWearedBikesPage;
+        private DataGridView wornBikesTable;
+        private NumericUpDown wornBikesTablePage;
+        private Label labelWornBikesPage;
         private Button buttonMaintenanceBike;
     }
 }

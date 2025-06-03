@@ -58,21 +58,21 @@ namespace BikeManagementSystemDesktop
             activeRentalTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
             // Weared bikes
-            wearedBikesTable.Columns.Add("Id", "Id");
-            wearedBikesTable.Columns.Add("Model", "Model");
-            wearedBikesTable.Columns.Add(CreateImageColumn());
-            wearedBikesTable.Columns.Add("Vendor", "Vendor");
-            wearedBikesTable.Columns.Add("Type", "Type");
-            wearedBikesTable.Columns.Add("Durability", "Durability");
-            wearedBikesTable.Columns.Add("LastMaintenanceDate", "Last maintenance date");
-            wearedBikesTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            wornBikesTable.Columns.Add("Id", "Id");
+            wornBikesTable.Columns.Add("Model", "Model");
+            wornBikesTable.Columns.Add(CreateImageColumn());
+            wornBikesTable.Columns.Add("Vendor", "Vendor");
+            wornBikesTable.Columns.Add("Type", "Type");
+            wornBikesTable.Columns.Add("Durability", "Durability");
+            wornBikesTable.Columns.Add("LastMaintenanceDate", "Last maintenance date");
+            wornBikesTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
             // Setup pages
             bikeTablePageNumber.Maximum = bikeService.GetPageCount(BikeService.DEFAULT_PAGE_SIZE) + 1;
             vendorTablePageNumber.Maximum = vendorService.GetPageCount(VendorService.DEFAULT_PAGE_SIZE) + 1;
             typeTablePageNumber.Maximum = typeService.GetPageCount(BikeTypeService.DEFAULT_PAGE_SIZE) + 1;
             activeRentalPageNumber.Maximum = rentalService.GetActiveRentalsPageCount(RentalService.DEFAULT_PAGE_SIZE) + 1;
-            wearedBikesTablePage.Maximum = bikeService.GetBikesRequiringMaintenancePageCount(BikeService.DEFAULT_PAGE_SIZE) + 1;
+            wornBikesTablePage.Maximum = bikeService.GetBikesRequiringMaintenancePageCount(BikeService.DEFAULT_PAGE_SIZE) + 1;
             ChangeBikeTablePage(1);
             ChangeVendorTablePage(1);
             ChangeTypeTablePage(1);
@@ -123,12 +123,12 @@ namespace BikeManagementSystemDesktop
 
         private void ChangeWearedBikesPage(int page)
         {
-            wearedBikesTable.Rows.Clear();
+            wornBikesTable.Rows.Clear();
             bikeService.GetBikesPageRequiringMaintenance(page).ForEach(bike =>
             {
                 string imagePath = Path.Combine(ImageModel.IMAGE_DIR, bike.Image.Path);
                 Image bikeImage = Image.FromFile(imagePath);
-                wearedBikesTable.Rows.Add(bike.Id, bike.Model, bikeImage, bike.Vendor.Name, bike.Type.Name, bike.Durability, bike.LastMaintenance?.MaintenanceDate);
+                wornBikesTable.Rows.Add(bike.Id, bike.Model, bikeImage, bike.Vendor.Name, bike.Type.Name, bike.Durability, bike.LastMaintenance?.MaintenanceDate);
             });
         }
 
@@ -355,27 +355,27 @@ namespace BikeManagementSystemDesktop
             activeRental.ShowDialog();
         }
 
-        private void wearedBikesTablePage_ValueChanged(object sender, EventArgs e)
+        private void wornBikesTablePage_ValueChanged(object sender, EventArgs e)
         {
-            int page = (int)wearedBikesTablePage.Value;
+            int page = (int)wornBikesTablePage.Value;
             ChangeWearedBikesPage(page);
         }
 
         private void buttonMaintenanceBike_Click(object sender, EventArgs e)
         {
-            var selectedRow=wearedBikesTable.SelectedRows;
+            var selectedRow = wornBikesTable.SelectedRows;
             if (selectedRow.Count == 0)
             {
                 GuiUtils.ShowError(this, "You must select bike first");
                 return;
             }
             long bikeID = (long)selectedRow[0].Cells[0].Value;
-            Bike toMaintenance=bikeService.GetEntity(bikeID);
+            Bike toMaintenance = bikeService.GetEntity(bikeID);
             BikeMaintenanceForm maintenanceForm = new BikeMaintenanceForm(toMaintenance, maintenanceService);
-            maintenanceForm.Owner=this;
-            maintenanceForm.OnSubmit+=() =>
+            maintenanceForm.Owner = this;
+            maintenanceForm.OnSubmit += () =>
             {
-                wearedBikesTable.Rows.RemoveAt(selectedRow[0].Index);
+                wornBikesTable.Rows.RemoveAt(selectedRow[0].Index);
             };
             maintenanceForm.ShowDialog();
         }
