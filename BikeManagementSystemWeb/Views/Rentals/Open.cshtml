@@ -1,0 +1,103 @@
+﻿@model BikeManagementSystemWeb.Models.ViewModels.ActiveRentalOpenViewModel
+@{
+    ViewData["Title"] = "Open active rental";
+}
+
+<h1>Active rental</h1>
+
+<h2>Client</h2>
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <dl>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Client)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Client.FirstName) @Html.DisplayFor(model => model.Client.LastName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Client.PhoneNumber)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Client.PhoneNumber)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Client.IdentityNumber)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Client.IdentityNumber)
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-6">
+            <dl>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.RentedFrom)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.RentedFrom)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.RentedTo)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.RentedTo)
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
+<h2>Rented bikes</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Model</th>
+            <th>Image</th>
+            <th>Vendor</th>
+            <th>Type</th>
+            <th>Return date</th>
+            <th>Status description</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var bike in Model.RentedBikes)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem=>bike.Id!.BikeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => bike.Model)
+                </td>
+                <td>
+                    <img class="tableImage" src="/Images/@bike.ImageId" alt="@bike.Vendor @bike.Model image" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => bike.Vendor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => bike.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => bike.ReturnDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => bike.ReturnStatusDescription)
+                </td>
+                <td>
+                    @if(bike.ReturnDate==null)
+                    {
+                        <a href="/Rentals/@Model.Id/ReturnBike/@bike.Id!.BikeId">Return bike</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-primary">Close</a>

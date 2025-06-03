@@ -35,3 +35,6 @@ body {
 .tableImage{
     max-height: 20vh;
 }
+.table-row-selected {
+    background-color: #d1ecf1;
+}

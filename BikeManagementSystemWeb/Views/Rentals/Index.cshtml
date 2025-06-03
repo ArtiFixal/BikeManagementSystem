@@ -1,0 +1,59 @@
+﻿@model IEnumerable<BikeManagementSystemLib.Models.Rental>
+
+@{
+    ViewData["Title"] = "Active rentals";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Rent bikes</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Client)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Client.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RentedFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RentedTo)
+            </th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.FirstName) @Html.DisplayFor(modelItem => item.Client.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentedFrom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentedTo)
+            </td>
+            <td>
+                <a href="/Rentals/@item.Id/Open">Open</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@await Html.PartialAsync("_Paging", ViewData["page"])

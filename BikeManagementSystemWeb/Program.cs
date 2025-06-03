@@ -11,6 +11,8 @@ builder.Services.AddScoped<VendorService>();
 builder.Services.AddScoped<BikeTypeService>();
 builder.Services.AddScoped<ImageServiceExtended>();
 builder.Services.AddScoped<BikeService>();
+builder.Services.AddScoped<RentalService>();
+builder.Services.AddScoped<ClientService>();
 
 builder.Services.AddDbContext<BikeManagementDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))

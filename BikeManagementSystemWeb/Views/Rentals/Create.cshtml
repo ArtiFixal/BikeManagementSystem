@@ -1,0 +1,218 @@
+﻿@using BikeManagementSystemLib.Models
+@model BikeManagementSystemWeb.Models.ViewModels.RentalViewModel
+
+@{
+    ViewData["Title"] = "Bike rental";
+}
+
+<h1>Bike rental</h1>
+
+<h4>Rental</h4>
+<hr />
+<div class="row">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="ClientID" class="control-label"></label>
+                <select asp-for="ClientID" class="form-control" asp-items="ViewBag.ClientID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="RentedFrom" class="control-label"></label>
+                <input asp-for="RentedFrom" class="form-control" />
+                <span asp-validation-for="RentedFrom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RentedTo" class="control-label"></label>
+                <input asp-for="RentedTo" class="form-control" />
+                <span asp-validation-for="RentedTo" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h5>Search</h5>
+            <hr/>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="vendorSelect">Vendor</label>
+                        <select id="vendorSelect" class="form-control" asp-items="ViewBag.Vendors">
+                            <option value="">-- All --</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="typeSelect">Bike Type</label>
+                        <select id="typeSelect" class="form-control" asp-items="ViewBag.BikeTypes">
+                            <option value="">-- All --</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-9 mb-2">
+                        <input type="text" id="modelNameInput" class="form-control" placeholder="Bike model..." />
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <button type="button" class="btn btn-info w-100" id="searchButton">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h5>Bikes to rent</h5>
+        <hr/>
+        <table id="bikesTable" class="table">
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>ID</th>
+                    <th>Model</th>
+                    <th>Image</th>
+                    <th>Vendor</th>
+                    <th>Type</th>
+                    <th>Last maintenance</th>
+                </tr>
+            </thead>
+            <tbody id="bikesTableBody">
+                @foreach (Bike bike in ViewBag.Bikes as List<Bike>)
+                {
+                    <tr class="bike-row" data-bike-id="@bike.Id">
+                        <td>
+                            <input type="checkbox" name="BikesId" value="@bike.Id" />
+                        </td>
+                        <td>@bike.Id</td>
+                        <td>@bike.Model</td>
+                        <td>
+                            <img class="tableImage" src="/Images/@bike.ImageId" alt="@bike.Vendor @bike.Model image"/>
+                        </td>
+                        <td>@bike.Vendor.Name</td>
+                        <td>@bike.Type.Name</td>
+                        <td>@bike.LastMaintenance?.MaintenanceDate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    
+        <div class="form-group d-flex align-items-center gap-2">
+            <input type="submit" value="Rent" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<div>
+    
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script defer>
+        document.querySelectorAll("#bikesTableBody tr.bike-row").forEach(row=>{
+            row.addEventListener("click", function (e) {
+                if (row && row.classList.contains("bike-row"))
+                    toggleRowSelection(row);
+            });
+        });
+
+        document.getElementById("searchButton").addEventListener("click",function (e) {
+            fetchBikes();
+        });
+
+        const selectedRowsMap = new Map();
+
+        function createCell(text) {
+            const td = document.createElement("td");
+            td.textContent = text ?? '';
+            return td;
+        }
+
+        function createCheckboxCell(bikeId, isChecked) {
+            const td = document.createElement("td");
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.name = "BikesId";
+            checkbox.value = bikeId;
+            checkbox.checked = isChecked;
+            td.appendChild(checkbox);
+            return td;
+        }
+
+        function createBikeRow(bike, isChecked = false) {
+            const tr = document.createElement("tr");
+            tr.dataset.bikeId = bike.id;
+            tr.classList.add("bike-row");
+
+            tr.appendChild(createCheckboxCell(bike.id, isChecked));
+            tr.appendChild(createCell(bike.id));
+            tr.appendChild(createCell(bike.model));
+            const imageCell=document.createElement("td");
+            const image=document.createElement("img");
+            image.src="/Images/"+bike.imageId;
+            image.classList.add("tableImage");
+            imageCell.appendChild(image);
+            tr.appendChild(imageCell);
+            tr.appendChild(createCell(bike.vendor));
+            tr.appendChild(createCell(bike.type));
+            tr.appendChild(createCell(bike.lastMaintenance ?? ''));
+
+            tr.addEventListener("click", (e) => {
+                toggleRowSelection(tr);
+            });
+
+            return tr;
+        }
+
+        function toggleRowSelection(row) {
+            const checkbox = row.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+            row.classList.toggle('table-active', checkbox.checked);
+
+            const id = row.dataset.bikeId;
+            if (checkbox.checked) {
+                selectedRowsMap.set(id, row.cloneNode(true));
+            } else {
+                selectedRowsMap.delete(id);
+            }
+        }
+
+        async function fetchBikes() {
+            const vendorId = document.getElementById("vendorSelect").value;
+            const bikeTypeId = document.getElementById("typeSelect").value;
+            const modelName = document.getElementById("modelNameInput").value;
+
+            const query = new URLSearchParams({
+                modelName: modelName || "",
+                vendorId: vendorId || "",
+                bikeTypeId: bikeTypeId || ""
+            });
+
+            const response = await fetch(`/Bikes/Available?${query}`, {
+                headers: { 'Accept': 'application/json' }
+            });
+            const bikes = await response.json();
+
+            const tableBody = document.getElementById("bikesTableBody");
+
+            while (tableBody.firstChild) {
+                tableBody.removeChild(tableBody.firstChild);
+            }
+
+            bikes.forEach(bike => {
+                const bikeIdStr=String(bike.id);
+                if(!selectedRowsMap.has(bikeIdStr))
+                {
+                    const row = createBikeRow(bike, false);
+                    tableBody.appendChild(row);
+                }
+            });
+
+            for (const [id, savedRow] of selectedRowsMap) {
+                const row = savedRow.cloneNode(true);
+                row.addEventListener("click", (e) => {
+                    toggleRowSelection(row);
+                });
+                tableBody.appendChild(row);
+            }
+        }
+    </script>
+}
