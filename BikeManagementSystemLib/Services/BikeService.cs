@@ -58,9 +58,14 @@ namespace BikeManagementSystemLib.Services
                 .ToListAsync();
         }
 
+        protected IQueryable<Bike> PrepareWearedBikes()
+        {
+            return entitySet.Where(bike => bike.Durability < 40);
+        }
+
         protected IQueryable<Bike> PrepareBikesRequiringMaintenancePage(int page)
         {
-            var wearedBikes = entitySet.Where(bike => bike.Durability < 40);
+            var wearedBikes = PrepareWearedBikes();
             return PrepareEntiytPage(wearedBikes, page, DEFAULT_PAGE_SIZE);
         }
 
@@ -74,6 +79,18 @@ namespace BikeManagementSystemLib.Services
         {
             return PrepareBikesRequiringMaintenancePage(page)
                 .ToListAsync();
+        }
+
+        public int GetBikesRequiringMaintenancePageCount(int pageSize)
+        {
+            return PrepareWearedBikes()
+                .Count() / pageSize;
+        }
+        public async Task<int> GetBikesRequiringMaintenancePageCountAsync(int pageSize)
+        {
+            return (await PrepareWearedBikes()
+                .CountAsync()
+                .ConfigureAwait(false)) / pageSize;
         }
 
         protected IQueryable<Bike> PrepareNotReturnedBikes()

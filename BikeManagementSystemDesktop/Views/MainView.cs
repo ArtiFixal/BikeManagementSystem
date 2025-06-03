@@ -72,6 +72,7 @@ namespace BikeManagementSystemDesktop
             vendorTablePageNumber.Maximum = vendorService.GetPageCount(VendorService.DEFAULT_PAGE_SIZE) + 1;
             typeTablePageNumber.Maximum = typeService.GetPageCount(BikeTypeService.DEFAULT_PAGE_SIZE) + 1;
             activeRentalPageNumber.Maximum = rentalService.GetActiveRentalsPageCount(RentalService.DEFAULT_PAGE_SIZE) + 1;
+            wearedBikesTablePage.Maximum = bikeService.GetBikesRequiringMaintenancePageCount(BikeService.DEFAULT_PAGE_SIZE) + 1;
             ChangeBikeTablePage(1);
             ChangeVendorTablePage(1);
             ChangeTypeTablePage(1);
