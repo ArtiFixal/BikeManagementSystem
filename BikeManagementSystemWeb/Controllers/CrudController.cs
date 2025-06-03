@@ -163,5 +163,10 @@ namespace BikeManagementSystemWeb.Controllers
                 return NotFound();
             }
         }
+
+        protected Task<IActionResult> NotFoundAsync()
+        {
+            return Task.FromResult<IActionResult>(NotFound());
+        }
     }
 }

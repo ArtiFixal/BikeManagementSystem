@@ -119,11 +119,6 @@ namespace BikeManagementSystemWeb.Controllers
             };
         }
 
-        private Task<IActionResult> NotFoundAsync()
-        {
-            return Task.FromResult<IActionResult>(NotFound());
-        }
-
         public override Task<IActionResult> Edit(long id)
         {
             return NotFoundAsync();
