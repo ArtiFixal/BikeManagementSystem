@@ -3,6 +3,7 @@ using BikeManagementSystemLib.Models;
 using BikeManagementSystemLib.Services;
 using BikeManagementSystemWeb.Models.ViewModels;
 using BikeManagementSystemWeb.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BikeManagementSystemWeb.Controllers
 {
@@ -17,6 +18,24 @@ namespace BikeManagementSystemWeb.Controllers
             this.vendorService = vendorService;
             this.bikeTypeService = bikeTypeService;
             this.imageService = imageService;
+        }
+
+        [HttpGet("Available")]
+        [Produces("application/json")]
+        public async Task<IActionResult> Available(string? modelName, long? vendorId, int? bikeTypeId)
+        {
+            var bikes = (await service.GetAvailableBikesAsync(modelName, vendorId, bikeTypeId))
+                .Select(bike=>new BikeSimpleViewModel()
+                {
+                    Id=bike.Id,
+                    Model=bike.Model,
+                    Vendor=bike.Vendor.Name,
+                    Type=bike.Type.Name,
+                    ImageId=bike.ImageId,
+                    LastMaintenance=bike.LastMaintenance?.MaintenanceDate,
+                })
+                .ToList();
+            return Ok(bikes);
         }
 
         protected override async Task BindViewData(Bike? entity = null)
