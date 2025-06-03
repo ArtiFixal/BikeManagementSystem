@@ -134,13 +134,13 @@ namespace BikeManagementSystemLib.Services
                 .ToListAsync();
         }
 
-        public long GetActiveRentalsPageCount(int pageSize)
+        public int GetActiveRentalsPageCount(int pageSize)
         {
             return LookForActiveRentals()
                 .Count()/pageSize;
         }
 
-        public async Task<long> GetActiveRentalsPageCountAsync(int pageSize)
+        public async Task<int> GetActiveRentalsPageCountAsync(int pageSize)
         {
             return await LookForActiveRentals()
                 .CountAsync()
