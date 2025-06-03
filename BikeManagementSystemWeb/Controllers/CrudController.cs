@@ -88,7 +88,7 @@ namespace BikeManagementSystemWeb.Controllers
 
         // GET: Entity/5/Edit
         [HttpGet("{id?}/Edit")]
-        public async Task<IActionResult> Edit(ID? id)
+        public virtual async Task<IActionResult> Edit(ID? id)
         {
             if (id == null)
                 return NotFound();
@@ -133,7 +133,7 @@ namespace BikeManagementSystemWeb.Controllers
 
         // GET: Entity/5/Delete
         [HttpGet("{id?}/Delete")]
-        public async Task<IActionResult> Delete(ID? id)
+        public virtual async Task<IActionResult> Delete(ID? id)
         {
             if (id == null)
                 return NotFound();
@@ -151,7 +151,7 @@ namespace BikeManagementSystemWeb.Controllers
         // POST: Entity/5/Delete
         [HttpPost("{id?}/Delete"),ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(ID id)
+        public virtual async Task<IActionResult> DeleteConfirmed(ID id)
         {
             try
             {
