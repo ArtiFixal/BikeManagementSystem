@@ -21,6 +21,9 @@ namespace BikeManagementSystemLib.Services
                 throw new EntityNotFoundException("Bike", bikeId);
             bike.LastMaintenance = maintenance;
             bike.Durability = 100;
+            context.Entry(bike)
+                .Property(bikeProp => bikeProp.Durability)
+                .IsModified = true;
             context.SaveChanges();
             return maintenance;
         }
@@ -32,7 +35,11 @@ namespace BikeManagementSystemLib.Services
                 throw new EntityNotFoundException("Bike", bikeId);
             bike.LastMaintenance = maintenance;
             bike.Durability = 100;
-            await context.SaveChangesAsync().ConfigureAwait(false);
+            context.Entry(bike)
+                .Property(bikeProp => bikeProp.Durability)
+                .IsModified = true;
+            await context.SaveChangesAsync()
+                .ConfigureAwait(false);
             return maintenance;
         }
     }
