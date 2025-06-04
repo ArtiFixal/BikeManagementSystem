@@ -46,13 +46,18 @@ Provides CRUD operations with pagination support on bike types.
 
 ![Bike type table](https://github.com/ArtiFixal/BikeManagementSystem/blob/docs/docs/image/bikeTypeTable.jpg?raw=true)
 
+### Bike rental
+Allows to rent bikes for selected client.
+
+![Bike rental](https://github.com/ArtiFixal/BikeManagementSystem/blob/docs/docs/image/bikeRental.jpg?raw=true)
+
 ### Active rentals table
-Displays paginated active rentals and allows to return bikes rented for selected rental.
+Shows active rentals with pagination and lets you return bikes from a selected rental.
 
 ![Active rentals table](https://github.com/ArtiFixal/BikeManagementSystem/blob/docs/docs/image/activeRentalsTable.jpg?raw=true)
 
 ### Active rental form
-Shows info abour selected active rental and bikes that was rented. Used to return rented bikes.
+Displays details of the selected rental and rented bikes. Used to return them.
 
 ![Active rental form](https://github.com/ArtiFixal/BikeManagementSystem/blob/docs/docs/image/activeRentalForm.jpg?raw=true)
 
@@ -61,10 +66,10 @@ Allows to describe state in which bike was returned.
 
 ![Return bike form](https://github.com/ArtiFixal/BikeManagementSystem/blob/docs/docs/image/returnBikeForm.jpg?raw=true)
 
-### Weared bikes
+### Worn bikes
 Displays bikes requiring maintenance.
 
-![Weared bikes table](https://github.com/ArtiFixal/BikeManagementSystem/blob/docs/docs/image/wearedBikesTable.jpg?raw=true)
+![Worn bikes table](https://github.com/ArtiFixal/BikeManagementSystem/blob/docs/docs/image/wearedBikesTable.jpg?raw=true)
 
 ### Maintenance form
 Used to describe bike maintenance process.
