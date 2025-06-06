@@ -18,6 +18,7 @@ namespace BikeManagementSystemDesktop
         private ClientService clientService;
         private RentalService rentalService;
         private MaintenanceService maintenanceService;
+        private TerrainService terrainService;
 
         public MainView(BikeManagementDbContext context)
         {
@@ -28,6 +29,7 @@ namespace BikeManagementSystemDesktop
             clientService = new ClientService(context);
             rentalService = new RentalService(context);
             maintenanceService = new MaintenanceService(context);
+            terrainService = new TerrainService(context);
             InitializeComponent();
             SetUpTables();
         }
@@ -45,14 +47,10 @@ namespace BikeManagementSystemDesktop
             BikeTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
             // Vendor table
-            vendorTable.Columns.Add("Id", "Id");
-            vendorTable.Columns.Add("Name", "Name");
-            vendorTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            SetUpSimpleTableColumns(vendorTable);
 
             // Type table
-            typeTable.Columns.Add("Id", "Id");
-            typeTable.Columns.Add("Name", "Name");
-            typeTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            SetUpSimpleTableColumns(typeTable);
 
             // Active Rentals
             activeRentalTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
@@ -67,17 +65,29 @@ namespace BikeManagementSystemDesktop
             wornBikesTable.Columns.Add("LastMaintenanceDate", "Last maintenance date");
             wornBikesTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
+            // Terrain table
+            SetUpSimpleTableColumns(terrainTable);
+
             // Setup pages
             bikeTablePageNumber.Maximum = bikeService.GetPageCount(BikeService.DEFAULT_PAGE_SIZE) + 1;
             vendorTablePageNumber.Maximum = vendorService.GetPageCount(VendorService.DEFAULT_PAGE_SIZE) + 1;
             typeTablePageNumber.Maximum = typeService.GetPageCount(BikeTypeService.DEFAULT_PAGE_SIZE) + 1;
             activeRentalPageNumber.Maximum = rentalService.GetActiveRentalsPageCount(RentalService.DEFAULT_PAGE_SIZE) + 1;
             wornBikesTablePage.Maximum = bikeService.GetBikesRequiringMaintenancePageCount(BikeService.DEFAULT_PAGE_SIZE) + 1;
+            terrainTablePage.Maximum = terrainService.GetPageCount(TerrainService.DEFAULT_PAGE_SIZE);
             ChangeBikeTablePage(1);
             ChangeVendorTablePage(1);
             ChangeTypeTablePage(1);
             ChangeActiveRentalsPage(1);
             ChangeWearedBikesPage(1);
+            ChangeTerrainPage(1);
+        }
+
+        private void SetUpSimpleTableColumns(DataGridView table)
+        {
+            table.Columns.Add("Id", "Id");
+            table.Columns.Add("Name", "Name");
+            table.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         }
 
         private void ChangeBikeTablePage(int page)
@@ -130,6 +140,13 @@ namespace BikeManagementSystemDesktop
                 Image bikeImage = Image.FromFile(imagePath);
                 wornBikesTable.Rows.Add(bike.Id, bike.Model, bikeImage, bike.Vendor.Name, bike.Type.Name, bike.Durability, bike.LastMaintenance?.MaintenanceDate);
             });
+        }
+
+        private void ChangeTerrainPage(int page)
+        {
+            terrainTable.Rows.Clear();
+            terrainService.GetEntityPage(page, TerrainService.DEFAULT_PAGE_SIZE).ForEach(terrain =>
+                terrainTable.Rows.Add(terrain.Id, terrain.Name));
         }
 
         private DataGridViewImageColumn CreateImageColumn()
@@ -378,6 +395,35 @@ namespace BikeManagementSystemDesktop
                 wornBikesTable.Rows.RemoveAt(selectedRow[0].Index);
             };
             maintenanceForm.ShowDialog();
+        }
+
+        private void buttonTerrainAdd_Click(object sender, EventArgs e)
+        {
+            AddSimpleEntity("Add new terrain", terrainTable, terrainTablePage, (name) =>
+            {
+                return terrainService.AddEntity(new Terrain(name));
+            });
+        }
+
+        private void buttonTerrainEdit_Click(object sender, EventArgs e)
+        {
+            EditSimpleEntity<int>("Edit terrain", terrainTable, (id, name) =>
+            {
+                Terrain toEdit = terrainService.GetEntity(id);
+                toEdit.Name = name;
+                terrainService.EditEntity(toEdit);
+            });
+        }
+
+        private void buttonTerrainDelete_Click(object sender, EventArgs e)
+        {
+            DeleteSelectedEntities(terrainTable, terrainService);
+        }
+
+        private void terrainTablePage_ValueChanged(object sender, EventArgs e)
+        {
+            int page = (int)terrainTablePage.Value;
+            ChangeTerrainPage(page);
         }
     }
 }

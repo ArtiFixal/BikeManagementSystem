@@ -1,3 +1,6 @@
+USE BikeManagementService;
+GO
+
 BEGIN TRY
     BEGIN TRANSACTION;
     SET IDENTITY_INSERT BikeTypes ON;
@@ -237,6 +240,40 @@ BEGIN TRY
     (17, 5, '2022-08-14 09:30:00', ''),
     (18, 6, '2024-02-18 11:00:00', 'Bike returned with the brakes needing adjustment.'),
     (19, 7, '2023-09-22 17:00:00', '');
+
+    SET IDENTITY_INSERT Terrains ON;
+
+    INSERT INTO Terrains (Id, Name) VALUES
+    (1, 'Road'),
+    (2, 'Gravel'),
+    (3, 'Dirt'),
+    (4, 'Sand'),
+    (5, 'Snow'),
+    (6, 'Mud'),
+    (7, 'Grass'),
+    (8, 'Rocky'),
+    (9, 'Trail'),
+    (10, 'Pavement'),
+    (11, 'Forest'),
+    (12, 'Mountain'),
+    (13, 'Beach'),
+    (14, 'Cobblestone'),
+    (15, 'Boardwalk'),
+    (16, 'Urban'),
+    (17, 'Wet Grass'),
+    (18, 'Ice'),
+    (19, 'Desert'),
+    (20, 'Singletrack'),
+    (21, 'Volcanic Ash'),
+    (22, 'Swamp'),
+    (23, 'Tundra'),
+    (24, 'Clay'),
+    (25, 'Loose Gravel'),
+    (26, 'Farm Field'),
+    (27, 'Rail Trail'),
+    (28, 'Bike Park');
+
+    SET IDENTITY_INSERT Terrains OFF;
 
     COMMIT;
 END TRY

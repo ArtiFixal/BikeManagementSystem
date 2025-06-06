@@ -15,6 +15,7 @@ namespace BikeManagementSystemLib
         public DbSet<Client> Clients { get; set; }
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<RentedBike> RentedBikes { get; set; }
+        public DbSet<Terrain> Terrains { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {

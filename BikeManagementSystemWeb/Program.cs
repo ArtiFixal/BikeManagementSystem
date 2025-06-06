@@ -14,6 +14,7 @@ builder.Services.AddScoped<BikeService>();
 builder.Services.AddScoped<RentalService>();
 builder.Services.AddScoped<ClientService>();
 builder.Services.AddScoped<MaintenanceService>();
+builder.Services.AddScoped<TerrainService>();
 
 builder.Services.AddDbContext<BikeManagementDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))

@@ -71,6 +71,14 @@ namespace BikeManagementSystemDesktop
             wornBikesTablePage = new NumericUpDown();
             labelWornBikesPage = new Label();
             buttonMaintenanceBike = new Button();
+            TerrainPage = new TabPage();
+            splitContainer1 = new SplitContainer();
+            terrainTable = new DataGridView();
+            terrainTablePage = new NumericUpDown();
+            labelTerrrainPage = new Label();
+            buttonTerrainDelete = new Button();
+            buttonTerrainEdit = new Button();
+            buttonTerrainAdd = new Button();
             ((System.ComponentModel.ISupportInitialize)BikeTable).BeginInit();
             menuTab.SuspendLayout();
             pageDashborad.SuspendLayout();
@@ -108,6 +116,13 @@ namespace BikeManagementSystemDesktop
             wearedBikesSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)wornBikesTable).BeginInit();
             ((System.ComponentModel.ISupportInitialize)wornBikesTablePage).BeginInit();
+            TerrainPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
+            splitContainer1.Panel1.SuspendLayout();
+            splitContainer1.Panel2.SuspendLayout();
+            splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)terrainTable).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)terrainTablePage).BeginInit();
             SuspendLayout();
             // 
             // BikeTable
@@ -131,6 +146,7 @@ namespace BikeManagementSystemDesktop
             menuTab.Controls.Add(TypePage);
             menuTab.Controls.Add(ActiveRentalsPage);
             menuTab.Controls.Add(WornBikesPage);
+            menuTab.Controls.Add(TerrainPage);
             menuTab.Dock = DockStyle.Fill;
             menuTab.Location = new Point(0, 0);
             menuTab.Name = "menuTab";
@@ -570,6 +586,100 @@ namespace BikeManagementSystemDesktop
             buttonMaintenanceBike.UseVisualStyleBackColor = true;
             buttonMaintenanceBike.Click += buttonMaintenanceBike_Click;
             // 
+            // TerrainPage
+            // 
+            TerrainPage.Controls.Add(splitContainer1);
+            TerrainPage.Location = new Point(4, 24);
+            TerrainPage.Name = "TerrainPage";
+            TerrainPage.Padding = new Padding(3);
+            TerrainPage.Size = new Size(796, 423);
+            TerrainPage.TabIndex = 6;
+            TerrainPage.Text = "Terrains";
+            TerrainPage.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer1
+            // 
+            splitContainer1.Dock = DockStyle.Fill;
+            splitContainer1.Location = new Point(3, 3);
+            splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            splitContainer1.Panel1.Controls.Add(terrainTable);
+            // 
+            // splitContainer1.Panel2
+            // 
+            splitContainer1.Panel2.Controls.Add(terrainTablePage);
+            splitContainer1.Panel2.Controls.Add(labelTerrrainPage);
+            splitContainer1.Panel2.Controls.Add(buttonTerrainDelete);
+            splitContainer1.Panel2.Controls.Add(buttonTerrainEdit);
+            splitContainer1.Panel2.Controls.Add(buttonTerrainAdd);
+            splitContainer1.Size = new Size(790, 417);
+            splitContainer1.SplitterDistance = 690;
+            splitContainer1.TabIndex = 0;
+            // 
+            // terrainTable
+            // 
+            terrainTable.AllowUserToAddRows = false;
+            terrainTable.AllowUserToDeleteRows = false;
+            terrainTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            terrainTable.Dock = DockStyle.Fill;
+            terrainTable.Location = new Point(0, 0);
+            terrainTable.Name = "terrainTable";
+            terrainTable.ReadOnly = true;
+            terrainTable.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            terrainTable.Size = new Size(690, 417);
+            terrainTable.TabIndex = 0;
+            // 
+            // terrainTablePage
+            // 
+            terrainTablePage.Location = new Point(2, 391);
+            terrainTablePage.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            terrainTablePage.Name = "terrainTablePage";
+            terrainTablePage.Size = new Size(97, 23);
+            terrainTablePage.TabIndex = 4;
+            terrainTablePage.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            terrainTablePage.ValueChanged += terrainTablePage_ValueChanged;
+            // 
+            // labelTerrrainPage
+            // 
+            labelTerrrainPage.AutoSize = true;
+            labelTerrrainPage.Location = new Point(3, 373);
+            labelTerrrainPage.Name = "labelTerrrainPage";
+            labelTerrrainPage.Size = new Size(36, 15);
+            labelTerrrainPage.TabIndex = 3;
+            labelTerrrainPage.Text = "Page:";
+            // 
+            // buttonTerrainDelete
+            // 
+            buttonTerrainDelete.Location = new Point(2, 61);
+            buttonTerrainDelete.Name = "buttonTerrainDelete";
+            buttonTerrainDelete.Size = new Size(89, 23);
+            buttonTerrainDelete.TabIndex = 2;
+            buttonTerrainDelete.Text = "Delete terrain";
+            buttonTerrainDelete.UseVisualStyleBackColor = true;
+            buttonTerrainDelete.Click += buttonTerrainDelete_Click;
+            // 
+            // buttonTerrainEdit
+            // 
+            buttonTerrainEdit.Location = new Point(3, 32);
+            buttonTerrainEdit.Name = "buttonTerrainEdit";
+            buttonTerrainEdit.Size = new Size(88, 23);
+            buttonTerrainEdit.TabIndex = 1;
+            buttonTerrainEdit.Text = "Edit terrain";
+            buttonTerrainEdit.UseVisualStyleBackColor = true;
+            buttonTerrainEdit.Click += buttonTerrainEdit_Click;
+            // 
+            // buttonTerrainAdd
+            // 
+            buttonTerrainAdd.Location = new Point(3, 3);
+            buttonTerrainAdd.Name = "buttonTerrainAdd";
+            buttonTerrainAdd.Size = new Size(88, 23);
+            buttonTerrainAdd.TabIndex = 0;
+            buttonTerrainAdd.Text = "Add terrain";
+            buttonTerrainAdd.UseVisualStyleBackColor = true;
+            buttonTerrainAdd.Click += buttonTerrainAdd_Click;
+            // 
             // MainView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -620,6 +730,14 @@ namespace BikeManagementSystemDesktop
             wearedBikesSplitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)wornBikesTable).EndInit();
             ((System.ComponentModel.ISupportInitialize)wornBikesTablePage).EndInit();
+            TerrainPage.ResumeLayout(false);
+            splitContainer1.Panel1.ResumeLayout(false);
+            splitContainer1.Panel2.ResumeLayout(false);
+            splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
+            splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)terrainTable).EndInit();
+            ((System.ComponentModel.ISupportInitialize)terrainTablePage).EndInit();
             ResumeLayout(false);
         }
 
@@ -664,5 +782,13 @@ namespace BikeManagementSystemDesktop
         private NumericUpDown wornBikesTablePage;
         private Label labelWornBikesPage;
         private Button buttonMaintenanceBike;
+        private TabPage TerrainPage;
+        private SplitContainer splitContainer1;
+        private DataGridView terrainTable;
+        private Button buttonTerrainAdd;
+        private Button buttonTerrainEdit;
+        private NumericUpDown terrainTablePage;
+        private Label labelTerrrainPage;
+        private Button buttonTerrainDelete;
     }
 }
