@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace BikeManagementSystemLib.Models
+﻿namespace BikeManagementSystemLib.Models
 {
     /// <summary>
     /// Represents DB key for RentedBike's.

@@ -1,5 +1,4 @@
 ﻿using BikeManagementSystemLib.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace BikeManagementSystemLib.Services
 {
