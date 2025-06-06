@@ -254,6 +254,7 @@ namespace BikeManagementSystemDesktop
             {
                 Vendor edited = vendorService.GetEntity(id);
                 edited.Name = name;
+                vendorService.EditEntity(edited);
             });
         }
 
@@ -276,6 +277,7 @@ namespace BikeManagementSystemDesktop
             {
                 BikeType bikeType = typeService.GetEntity(id);
                 bikeType.Name = name;
+                typeService.EditEntity(bikeType);
             });
         }
 
