@@ -31,6 +31,11 @@ Allows CRUD operations with pagination on bikes.
 
 ![Bike table](https://github.com/ArtiFixal/BikeManagementSystem/blob/docs/docs/image/bikeTable.jpg?raw=true)
 
+### Bike maintenances
+Displays the bike's full maintenance history.
+
+![Bike maintenances](https://github.com/ArtiFixal/BikeManagementSystem/blob/docs/docs/image/maintenanceHistoryForm.jpg?raw=true)
+
 ### Add/edit bike form
 Form used to create/update bikes.
 
@@ -45,6 +50,16 @@ Supports CRUD operations with pagination on vendors.
 Provides CRUD operations with pagination support on bike types.
 
 ![Bike type table](https://github.com/ArtiFixal/BikeManagementSystem/blob/docs/docs/image/bikeTypeTable.jpg?raw=true)
+
+### Bike type wear ratios
+Allows setting bike wear ratios for terrains.
+
+![Bike type wear ratios table](https://github.com/ArtiFixal/BikeManagementSystem/blob/docs/docs/image/wearRatioTable.jpg?raw=true)
+
+### Wear ratio update form
+Used to update wear ratio for selected bike type and terrain.
+
+![Bike type wear ratio edit form](https://github.com/ArtiFixal/BikeManagementSystem/blob/docs/docs/image/wearRatioEditForm.jpg?raw=true)
 
 ### Bike rental
 Allows to rent bikes for selected client.
@@ -75,3 +90,8 @@ Displays bikes requiring maintenance.
 Used to describe bike maintenance process.
 
 ![Maintenance form](https://github.com/ArtiFixal/BikeManagementSystem/blob/docs/docs/image/maintenanceForm.jpg?raw=true)
+
+### Terrain table
+Supports CRUD operations with pagination on terrains.
+
+![Maintenance form](https://github.com/ArtiFixal/BikeManagementSystem/blob/docs/docs/image/terrainTable.jpg?raw=true)
