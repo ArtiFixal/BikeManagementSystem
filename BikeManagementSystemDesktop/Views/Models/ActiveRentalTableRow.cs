@@ -8,14 +8,16 @@
     {
         public long Id { get; set; }
         public string Client { get; set; }
+        public string Terrain { get; set; }
         public string PhoneNumber { get; set; }
         public DateTime RentedFrom { get; set; }
         public DateTime RentedTo { get; set; }
 
-        public ActiveRentalTableRow(long id, string client, string phoneNumber, DateTime rentedFrom, DateTime rentedTo)
+        public ActiveRentalTableRow(long id, string client,string terrain, string phoneNumber, DateTime rentedFrom, DateTime rentedTo)
         {
             Id = id;
             Client = client;
+            Terrain = terrain;
             PhoneNumber = phoneNumber;
             RentedFrom = rentedFrom;
             RentedTo = rentedTo;

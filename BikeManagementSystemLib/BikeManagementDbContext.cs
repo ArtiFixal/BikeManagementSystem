@@ -16,6 +16,7 @@ namespace BikeManagementSystemLib
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<RentedBike> RentedBikes { get; set; }
         public DbSet<Terrain> Terrains { get; set; }
+        public DbSet<BikeWear> BikeWears { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
@@ -69,6 +70,18 @@ namespace BikeManagementSystemLib
                 entity.HasOne(rentedBike => rentedBike.Bike)
                 .WithMany(bike => bike.RentedBikes)
                 .HasForeignKey(rentedBike => rentedBike.BikeId);
+            });
+
+            modelBuilder.Entity<BikeWear>(entity => {
+                entity.Ignore(bikeWear => bikeWear.Id);
+                entity.HasKey(wear => new { wear.BikeTypeId, wear.TerrainId });
+                entity.HasOne(bikeWear => bikeWear.BikeType)
+                .WithMany(bikeType=>bikeType.BikeWears)
+                .HasForeignKey(bikeType => bikeType.BikeTypeId);
+
+                entity.HasOne(bikeWear => bikeWear.Terrain)
+                .WithMany(terrain=>terrain.BikeWears)
+                .HasForeignKey(terrain => terrain.TerrainId);
             });
         }
     }

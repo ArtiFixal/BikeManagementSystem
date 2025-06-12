@@ -10,6 +10,7 @@ namespace BikeManagementSystemLib.Models
         public string Name { get; set; }
 
         public virtual ICollection<Bike> Bikes { get; set; }
+        public virtual ICollection<BikeWear> BikeWears { get; set; }
 
         public BikeType(string name) : this(0, name) { }
 

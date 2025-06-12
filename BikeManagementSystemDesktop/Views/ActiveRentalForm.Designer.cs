@@ -35,6 +35,8 @@
             labelClientIdText = new Label();
             labelClientId = new Label();
             splitBody = new SplitContainer();
+            labelTerrain = new Label();
+            labelTerrainText = new Label();
             labelRentedTo = new Label();
             labelRentedToText = new Label();
             labelRentedFrom = new Label();
@@ -121,6 +123,8 @@
             // 
             // splitBody.Panel1
             // 
+            splitBody.Panel1.Controls.Add(labelTerrain);
+            splitBody.Panel1.Controls.Add(labelTerrainText);
             splitBody.Panel1.Controls.Add(labelRentedTo);
             splitBody.Panel1.Controls.Add(labelRentedToText);
             splitBody.Panel1.Controls.Add(labelRentedFrom);
@@ -138,6 +142,24 @@
             splitBody.Size = new Size(800, 450);
             splitBody.SplitterDistance = 88;
             splitBody.TabIndex = 6;
+            // 
+            // labelTerrain
+            // 
+            labelTerrain.AutoSize = true;
+            labelTerrain.Location = new Point(377, 57);
+            labelTerrain.Name = "labelTerrain";
+            labelTerrain.Size = new Size(68, 15);
+            labelTerrain.TabIndex = 11;
+            labelTerrain.Text = "Terrain type";
+            // 
+            // labelTerrainText
+            // 
+            labelTerrainText.AutoSize = true;
+            labelTerrainText.Location = new Point(326, 57);
+            labelTerrainText.Name = "labelTerrainText";
+            labelTerrainText.Size = new Size(45, 15);
+            labelTerrainText.TabIndex = 10;
+            labelTerrainText.Text = "Terrain:";
             // 
             // labelRentedTo
             // 
@@ -295,5 +317,7 @@
         private Splitter splitter2;
         private Splitter splitter1;
         private Panel panelButtons;
+        private Label labelTerrain;
+        private Label labelTerrainText;
     }
 }

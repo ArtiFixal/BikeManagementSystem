@@ -1,0 +1,39 @@
+﻿@using BikeManagementSystemLib.Models
+@model BikeManagementSystemWeb.Models.ViewModels.BikeWearViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+    BikeType bikeType = (BikeType)ViewData["bikeType"];
+}
+
+<h1>Edit</h1>
+
+<h4>BikeWear</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="BikeTypeID" />
+            <input type="hidden" asp-for="TerrainID" />
+            <div class="form-group control-label">
+                <h5>
+                    Bike type: @bikeType.Name
+                </h5>
+            </div>
+            <div class="form-group control-label">
+                <h5>
+                    Terrain: @Model.Terrain
+                </h5>
+            </div>
+            <div class="form-group">
+                <label asp-for="WearRatio" class="control-label"></label>
+                <input asp-for="WearRatio" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" asp-route-bikeTypeID="@Model.BikeTypeID" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

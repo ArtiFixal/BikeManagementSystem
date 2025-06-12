@@ -6,7 +6,17 @@ namespace BikeManagementSystemLib.Services
 {
     public class RentalService : CrudService<long, Rental>
     {
-        public RentalService(BikeManagementDbContext context): base(context, context.Rentals){}
+        private readonly BikeWearService bikeWearService;
+
+        public RentalService(BikeManagementDbContext context): base(context, context.Rentals)
+        {
+            bikeWearService=new BikeWearService(context);
+        }
+
+        public RentalService(BikeManagementDbContext context,BikeWearService bikeWearService) : base(context, context.Rentals)
+        {
+            this.bikeWearService = bikeWearService;
+        }
 
         /// <summary>
         /// Creates query looking for active rentals.
@@ -84,7 +94,9 @@ namespace BikeManagementSystemLib.Services
             // Make bike available again
             bikeToReturn.Bike.IsAvailable = true;
             // Wear bike
-            bikeToReturn.Bike.Durability -= CalculateBikeWear(rental, 1);
+            BikeWearKey wearToLookFor = new BikeWearKey(bikeToReturn.Bike.Type.Id, rental.TerrainID);
+            BikeWear bikeWear = bikeWearService.GetEntity(wearToLookFor);
+            bikeToReturn.Bike.Durability -= CalculateBikeWear(rental, bikeWear.WearRatio);
             if (bikeToReturn.Bike.Durability < 0)
                 bikeToReturn.Bike.Durability = 0;
             // Make rental unactive

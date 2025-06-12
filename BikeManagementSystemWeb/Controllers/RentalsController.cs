@@ -73,6 +73,7 @@ namespace BikeManagementSystemWeb.Controllers
                     RentedFrom = rental.RentedFrom,
                     RentedTo = rental.RentedTo,
                     Client=client,
+                    Terrain=rental.Terrain.Name,
                     RentedBikes=rentedBikes,
                 };
                 return View(viewModel);
@@ -150,6 +151,7 @@ namespace BikeManagementSystemWeb.Controllers
             {
                 Id = entity.Id,
                 ClientID=entity.ClientID,
+                TerrainID=entity.TerrainID,
                 RentedFrom=entity.RentedFrom,
                 RentedTo=entity.RentedTo,
                 BikesId=rentedBikes,
@@ -163,6 +165,7 @@ namespace BikeManagementSystemWeb.Controllers
             {
                 Id = viewModel.Id ?? 0,
                 ClientID=viewModel.ClientID,
+                TerrainID = viewModel.TerrainID,
                 RentedFrom = viewModel.RentedFrom,
                 RentedTo = viewModel.RentedTo,
                 AllBikesReturned = false,

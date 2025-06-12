@@ -23,6 +23,7 @@ namespace BikeManagementSystemDesktop.Views
             labelClientId.Text = rental.Client.IdentityNumber;
             labelRentedFrom.Text = rental.RentedFrom.ToString();
             labelRentedTo.Text = rental.RentedTo.ToString();
+            labelTerrain.Text = rental.Terrain.Name;
             FetchRentedBikes();
         }
 

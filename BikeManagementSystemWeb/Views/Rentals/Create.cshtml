@@ -18,6 +18,10 @@
                 <select asp-for="ClientID" class="form-control" asp-items="ViewBag.ClientID"></select>
             </div>
             <div class="form-group">
+                <label asp-for="TerrainID" class="control-label"></label>
+                <select asp-for="TerrainID" class="form-control" asp-items="ViewBag.TerrainID"></select>
+            </div>
+            <div class="form-group">
                 <label asp-for="RentedFrom" class="control-label"></label>
                 <input asp-for="RentedFrom" class="form-control" />
                 <span asp-validation-for="RentedFrom" class="text-danger"></span>

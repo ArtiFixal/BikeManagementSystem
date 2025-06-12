@@ -49,6 +49,8 @@
             rentalTable = new DataGridView();
             buttonRent = new Button();
             buttonCancel = new Button();
+            labelTerrain = new Label();
+            terrainBox = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)splitMainContainer).BeginInit();
             splitMainContainer.Panel1.SuspendLayout();
             splitMainContainer.Panel2.SuspendLayout();
@@ -78,7 +80,7 @@
             // splitMainContainer.Panel2
             // 
             splitMainContainer.Panel2.Controls.Add(splitRentalContainer);
-            splitMainContainer.Size = new Size(800, 421);
+            splitMainContainer.Size = new Size(800, 443);
             splitMainContainer.SplitterDistance = 393;
             splitMainContainer.TabIndex = 0;
             // 
@@ -101,8 +103,8 @@
             // 
             splitBikeContainer.Panel2.Controls.Add(bikeTable);
             splitBikeContainer.Panel2.Controls.Add(buttonAddToRent);
-            splitBikeContainer.Size = new Size(393, 421);
-            splitBikeContainer.SplitterDistance = 96;
+            splitBikeContainer.Size = new Size(393, 443);
+            splitBikeContainer.SplitterDistance = 101;
             splitBikeContainer.TabIndex = 0;
             // 
             // buttonSearch
@@ -182,6 +184,8 @@
             // 
             // splitRentalContainer.Panel1
             // 
+            splitRentalContainer.Panel1.Controls.Add(terrainBox);
+            splitRentalContainer.Panel1.Controls.Add(labelTerrain);
             splitRentalContainer.Panel1.Controls.Add(buttonAddClient);
             splitRentalContainer.Panel1.Controls.Add(buttonRemoveBike);
             splitRentalContainer.Panel1.Controls.Add(rentTo);
@@ -194,8 +198,8 @@
             // splitRentalContainer.Panel2
             // 
             splitRentalContainer.Panel2.Controls.Add(rentalTable);
-            splitRentalContainer.Size = new Size(403, 421);
-            splitRentalContainer.SplitterDistance = 147;
+            splitRentalContainer.Size = new Size(403, 443);
+            splitRentalContainer.SplitterDistance = 193;
             splitRentalContainer.TabIndex = 0;
             // 
             // buttonAddClient
@@ -210,7 +214,7 @@
             // 
             // buttonRemoveBike
             // 
-            buttonRemoveBike.Location = new Point(306, 122);
+            buttonRemoveBike.Location = new Point(306, 158);
             buttonRemoveBike.Name = "buttonRemoveBike";
             buttonRemoveBike.Size = new Size(94, 23);
             buttonRemoveBike.TabIndex = 6;
@@ -280,12 +284,12 @@
             rentalTable.Name = "rentalTable";
             rentalTable.ReadOnly = true;
             rentalTable.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            rentalTable.Size = new Size(403, 270);
+            rentalTable.Size = new Size(403, 246);
             rentalTable.TabIndex = 0;
             // 
             // buttonRent
             // 
-            buttonRent.Location = new Point(316, 427);
+            buttonRent.Location = new Point(316, 449);
             buttonRent.Name = "buttonRent";
             buttonRent.Size = new Size(75, 23);
             buttonRent.TabIndex = 1;
@@ -295,7 +299,7 @@
             // 
             // buttonCancel
             // 
-            buttonCancel.Location = new Point(397, 427);
+            buttonCancel.Location = new Point(397, 449);
             buttonCancel.Name = "buttonCancel";
             buttonCancel.Size = new Size(75, 23);
             buttonCancel.TabIndex = 2;
@@ -303,11 +307,29 @@
             buttonCancel.UseVisualStyleBackColor = true;
             buttonCancel.Click += buttonCancel_Click;
             // 
+            // labelTerrain
+            // 
+            labelTerrain.AutoSize = true;
+            labelTerrain.Location = new Point(3, 141);
+            labelTerrain.Name = "labelTerrain";
+            labelTerrain.Size = new Size(142, 15);
+            labelTerrain.TabIndex = 8;
+            labelTerrain.Text = "Approximate terrain type:";
+            // 
+            // terrainBox
+            // 
+            terrainBox.FormattingEnabled = true;
+            terrainBox.Location = new Point(14, 159);
+            terrainBox.Name = "terrainBox";
+            terrainBox.Size = new Size(200, 23);
+            terrainBox.TabIndex = 9;
+            terrainBox.Text = "Terrain";
+            // 
             // BikeRentalForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 455);
+            ClientSize = new Size(800, 484);
             Controls.Add(buttonCancel);
             Controls.Add(buttonRent);
             Controls.Add(splitMainContainer);
@@ -356,5 +378,7 @@
         private DataGridView bikeTable;
         private DataGridView rentalTable;
         private Button buttonAddClient;
+        private ComboBox terrainBox;
+        private Label labelTerrain;
     }
 }

@@ -63,5 +63,20 @@
                 return true;
             }
         }
+
+        public static bool ValidateNumber(NumericUpDown number,decimal rangeFrom,decimal rangeTo)
+        {
+            decimal value=number.Value;
+            if(value>rangeTo || value<rangeFrom)
+            {
+                ChangeColorToError(number);
+                return false;
+            }
+            else
+            {
+                RestoreDefaultColor(number);
+                return true;
+            }
+        }
     }
 }

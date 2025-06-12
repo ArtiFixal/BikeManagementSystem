@@ -16,6 +16,12 @@
     <Compile Update="Views\BikeReturnForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Views\BikeWearForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Views\BikeWearTableForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Views\ClientForm.cs">
       <SubType>Form</SubType>
     </Compile>

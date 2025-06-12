@@ -19,6 +19,7 @@ namespace BikeManagementSystemDesktop
         private RentalService rentalService;
         private MaintenanceService maintenanceService;
         private TerrainService terrainService;
+        private BikeWearService bikeWearService;
 
         public MainView(BikeManagementDbContext context)
         {
@@ -30,6 +31,7 @@ namespace BikeManagementSystemDesktop
             rentalService = new RentalService(context);
             maintenanceService = new MaintenanceService(context);
             terrainService = new TerrainService(context);
+            bikeWearService = new BikeWearService(context);
             InitializeComponent();
             SetUpTables();
         }
@@ -74,7 +76,7 @@ namespace BikeManagementSystemDesktop
             typeTablePageNumber.Maximum = typeService.GetPageCount(BikeTypeService.DEFAULT_PAGE_SIZE) + 1;
             activeRentalPageNumber.Maximum = rentalService.GetActiveRentalsPageCount(RentalService.DEFAULT_PAGE_SIZE) + 1;
             wornBikesTablePage.Maximum = bikeService.GetBikesRequiringMaintenancePageCount(BikeService.DEFAULT_PAGE_SIZE) + 1;
-            terrainTablePage.Maximum = terrainService.GetPageCount(TerrainService.DEFAULT_PAGE_SIZE);
+            terrainTablePage.Maximum = terrainService.GetPageCount(TerrainService.DEFAULT_PAGE_SIZE) + 1;
             ChangeBikeTablePage(1);
             ChangeVendorTablePage(1);
             ChangeTypeTablePage(1);
@@ -126,8 +128,9 @@ namespace BikeManagementSystemDesktop
         {
             activeRentalTable.DataSource = rentalService.GetActiveRentalsPage(page)
                 .Select(rental => new ActiveRentalTableRow(rental.Id,
-                    $"{rental.Client.FirstName} {rental.Client.LastName}",
-                    rental.Client.PhoneNumber, rental.RentedFrom, rental.RentedTo)
+                    $"{rental.Client.FirstName} {rental.Client.LastName}", 
+                    rental.Terrain.Name, rental.Client.PhoneNumber, 
+                    rental.RentedFrom, rental.RentedTo)
                 ).ToList();
         }
 
@@ -337,7 +340,7 @@ namespace BikeManagementSystemDesktop
 
         private void buttonRent_Click(object sender, EventArgs e)
         {
-            BikeRentalForm rentalForm = new BikeRentalForm(bikeService, vendorService, typeService, clientService, rentalService);
+            BikeRentalForm rentalForm = new BikeRentalForm(bikeService, vendorService, typeService, clientService, rentalService,terrainService);
             rentalForm.Owner = this;
             rentalForm.OnSubmit += () =>
             {
@@ -426,6 +429,20 @@ namespace BikeManagementSystemDesktop
         {
             int page = (int)terrainTablePage.Value;
             ChangeTerrainPage(page);
+        }
+
+        private void buttonOpenWearRatios_Click(object sender, EventArgs e)
+        {
+            if (typeTable.SelectedRows.Count != 0)
+            {
+                int bikeTypeID = (int)typeTable.SelectedRows[0].Cells[0].Value;
+                BikeType selectedType = typeService.GetEntity(bikeTypeID);
+                BikeWearTableForm wearTable = new(bikeWearService, terrainService, selectedType);
+                wearTable.Owner = this;
+                wearTable.ShowDialog();
+            }
+            else
+                GuiUtils.ShowError(this, "You need to select bike type first");
         }
     }
 }

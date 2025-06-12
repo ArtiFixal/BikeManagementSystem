@@ -1,6 +1,5 @@
 ﻿using BikeManagementSystemLib.Models;
 using BikeManagementSystemLib.Services;
-using System.ComponentModel.DataAnnotations;
 using Image = System.Drawing.Image;
 using ImageModel = BikeManagementSystemLib.Models.Image;
 
@@ -8,17 +7,18 @@ namespace BikeManagementSystemDesktop.Views
 {
     public partial class BikeRentalForm : Form
     {
-        private BikeService bikeService;
-        private VendorService vendorService;
-        private BikeTypeService bikeTypeService;
-        private ClientService clientService;
-        private RentalService rentalService;
+        private readonly BikeService bikeService;
+        private readonly VendorService vendorService;
+        private readonly BikeTypeService bikeTypeService;
+        private readonly ClientService clientService;
+        private readonly RentalService rentalService;
+        private readonly TerrainService terrainService;
         private HashSet<TableRow> rentalTableRows;
 
         public delegate void FormSubmit();
         public event FormSubmit OnSubmit;
 
-        public BikeRentalForm(BikeService bikeService, VendorService vendorService, BikeTypeService bikeTypeService, ClientService clientService, RentalService rentalService)
+        public BikeRentalForm(BikeService bikeService, VendorService vendorService, BikeTypeService bikeTypeService, ClientService clientService, RentalService rentalService, TerrainService terrainService)
         {
             rentalTableRows = [];
             InitializeComponent();
@@ -27,6 +27,7 @@ namespace BikeManagementSystemDesktop.Views
             this.bikeTypeService = bikeTypeService;
             this.clientService = clientService;
             this.rentalService = rentalService;
+            this.terrainService = terrainService;
             bikeTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             rentalTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             rentalTable.DataSource = rentalTableRows.ToList();
@@ -38,6 +39,7 @@ namespace BikeManagementSystemDesktop.Views
             types.Insert(0, null);
             typeBox.DataSource = types;
             clientBox.DataSource = clientService.GetAllEntities();
+            terrainBox.DataSource = terrainService.GetAllEntities();
             SearchBikes();
         }
 
@@ -131,7 +133,8 @@ namespace BikeManagementSystemDesktop.Views
                 return;
             }
             Client selectedClient = (Client)clientBox.SelectedItem;
-            Rental rental = new Rental(selectedClient, rentFrom.Value, rentTo.Value);
+            Terrain selectedTerrain = (Terrain)terrainBox.SelectedItem;
+            Rental rental = new Rental(selectedClient,selectedTerrain, rentFrom.Value, rentTo.Value);
             foreach (var item in rentalTableRows)
             {
                 Bike bikeToRent = bikeService.GetEntity(item.Id);

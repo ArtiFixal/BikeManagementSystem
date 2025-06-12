@@ -1,0 +1,46 @@
+﻿@using BikeManagementSystemLib.Models
+@model IEnumerable<BikeManagementSystemWeb.Models.ViewModels.BikeWearViewModel>
+
+@{
+    ViewData["Title"] = "Bike wear ratios";
+    BikeType bikeType = (BikeType)ViewData["bikeType"];
+}
+
+<h1>BikeType: @bikeType.Name wear ratios</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TerrainID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Terrain)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WearRatio)
+            </th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TerrainID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Terrain)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WearRatio)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-bikeTypeID="@bikeType.Id" asp-route-terrainID="@item.TerrainID">Edit</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@await Html.PartialAsync("_Paging", ViewData["page"])

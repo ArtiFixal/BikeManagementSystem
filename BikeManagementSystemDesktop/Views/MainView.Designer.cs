@@ -54,6 +54,7 @@ namespace BikeManagementSystemDesktop
             TypePage = new TabPage();
             typeSplitContainer = new SplitContainer();
             typeTable = new DataGridView();
+            buttonOpenWearRatios = new Button();
             labelTypePage = new Label();
             typeTablePageNumber = new NumericUpDown();
             buttonTypeDelete = new Button();
@@ -373,6 +374,7 @@ namespace BikeManagementSystemDesktop
             // 
             // typeSplitContainer.Panel2
             // 
+            typeSplitContainer.Panel2.Controls.Add(buttonOpenWearRatios);
             typeSplitContainer.Panel2.Controls.Add(labelTypePage);
             typeSplitContainer.Panel2.Controls.Add(typeTablePageNumber);
             typeSplitContainer.Panel2.Controls.Add(buttonTypeDelete);
@@ -394,6 +396,16 @@ namespace BikeManagementSystemDesktop
             typeTable.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             typeTable.Size = new Size(703, 417);
             typeTable.TabIndex = 0;
+            // 
+            // buttonOpenWearRatios
+            // 
+            buttonOpenWearRatios.Location = new Point(2, 90);
+            buttonOpenWearRatios.Name = "buttonOpenWearRatios";
+            buttonOpenWearRatios.Size = new Size(75, 23);
+            buttonOpenWearRatios.TabIndex = 5;
+            buttonOpenWearRatios.Text = "Wear ratios";
+            buttonOpenWearRatios.UseVisualStyleBackColor = true;
+            buttonOpenWearRatios.Click += buttonOpenWearRatios_Click;
             // 
             // labelTypePage
             // 
@@ -790,5 +802,6 @@ namespace BikeManagementSystemDesktop
         private NumericUpDown terrainTablePage;
         private Label labelTerrrainPage;
         private Button buttonTerrainDelete;
+        private Button buttonOpenWearRatios;
     }
 }
