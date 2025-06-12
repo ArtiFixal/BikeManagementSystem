@@ -38,6 +38,7 @@ namespace BikeManagementSystemDesktop
             buttonRent = new Button();
             BikePage = new TabPage();
             bikeSplitContainer = new SplitContainer();
+            buttonMaintenanceHistory = new Button();
             labelBikeTablePage = new Label();
             bikeTablePageNumber = new NumericUpDown();
             buttonDeleteBike = new Button();
@@ -136,7 +137,7 @@ namespace BikeManagementSystemDesktop
             BikeTable.ReadOnly = true;
             BikeTable.RowTemplate.Resizable = DataGridViewTriState.True;
             BikeTable.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            BikeTable.Size = new Size(700, 417);
+            BikeTable.Size = new Size(696, 417);
             BikeTable.TabIndex = 4;
             // 
             // menuTab
@@ -199,14 +200,25 @@ namespace BikeManagementSystemDesktop
             // 
             // bikeSplitContainer.Panel2
             // 
+            bikeSplitContainer.Panel2.Controls.Add(buttonMaintenanceHistory);
             bikeSplitContainer.Panel2.Controls.Add(labelBikeTablePage);
             bikeSplitContainer.Panel2.Controls.Add(bikeTablePageNumber);
             bikeSplitContainer.Panel2.Controls.Add(buttonDeleteBike);
             bikeSplitContainer.Panel2.Controls.Add(buttonAddBike);
             bikeSplitContainer.Panel2.Controls.Add(buttonEditBike);
             bikeSplitContainer.Size = new Size(790, 417);
-            bikeSplitContainer.SplitterDistance = 700;
+            bikeSplitContainer.SplitterDistance = 696;
             bikeSplitContainer.TabIndex = 7;
+            // 
+            // buttonMaintenanceHistory
+            // 
+            buttonMaintenanceHistory.Location = new Point(3, 90);
+            buttonMaintenanceHistory.Name = "buttonMaintenanceHistory";
+            buttonMaintenanceHistory.Size = new Size(87, 39);
+            buttonMaintenanceHistory.TabIndex = 11;
+            buttonMaintenanceHistory.Text = "Maintenance history";
+            buttonMaintenanceHistory.UseVisualStyleBackColor = true;
+            buttonMaintenanceHistory.Click += buttonMaintenanceHistory_Click;
             // 
             // labelBikeTablePage
             // 
@@ -231,7 +243,7 @@ namespace BikeManagementSystemDesktop
             // 
             buttonDeleteBike.Location = new Point(3, 61);
             buttonDeleteBike.Name = "buttonDeleteBike";
-            buttonDeleteBike.Size = new Size(75, 23);
+            buttonDeleteBike.Size = new Size(87, 23);
             buttonDeleteBike.TabIndex = 8;
             buttonDeleteBike.Text = "Delete Bike";
             buttonDeleteBike.UseVisualStyleBackColor = true;
@@ -241,7 +253,7 @@ namespace BikeManagementSystemDesktop
             // 
             buttonAddBike.Location = new Point(3, 3);
             buttonAddBike.Name = "buttonAddBike";
-            buttonAddBike.Size = new Size(75, 23);
+            buttonAddBike.Size = new Size(87, 23);
             buttonAddBike.TabIndex = 6;
             buttonAddBike.Text = "Add Bike";
             buttonAddBike.UseVisualStyleBackColor = true;
@@ -251,7 +263,7 @@ namespace BikeManagementSystemDesktop
             // 
             buttonEditBike.Location = new Point(3, 32);
             buttonEditBike.Name = "buttonEditBike";
-            buttonEditBike.Size = new Size(75, 23);
+            buttonEditBike.Size = new Size(87, 23);
             buttonEditBike.TabIndex = 7;
             buttonEditBike.Text = "Edit Bike";
             buttonEditBike.UseVisualStyleBackColor = true;
@@ -803,5 +815,6 @@ namespace BikeManagementSystemDesktop
         private Label labelTerrrainPage;
         private Button buttonTerrainDelete;
         private Button buttonOpenWearRatios;
+        private Button buttonMaintenanceHistory;
     }
 }

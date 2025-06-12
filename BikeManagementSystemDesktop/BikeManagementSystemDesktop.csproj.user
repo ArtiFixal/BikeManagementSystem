@@ -25,6 +25,9 @@
     <Compile Update="Views\ClientForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Views\MaintenanceHistoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Views\SimpleEntityFrom.cs">
       <SubType>Form</SubType>
     </Compile>

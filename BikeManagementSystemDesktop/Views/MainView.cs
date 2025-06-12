@@ -128,8 +128,8 @@ namespace BikeManagementSystemDesktop
         {
             activeRentalTable.DataSource = rentalService.GetActiveRentalsPage(page)
                 .Select(rental => new ActiveRentalTableRow(rental.Id,
-                    $"{rental.Client.FirstName} {rental.Client.LastName}", 
-                    rental.Terrain.Name, rental.Client.PhoneNumber, 
+                    $"{rental.Client.FirstName} {rental.Client.LastName}",
+                    rental.Terrain.Name, rental.Client.PhoneNumber,
                     rental.RentedFrom, rental.RentedTo)
                 ).ToList();
         }
@@ -340,7 +340,7 @@ namespace BikeManagementSystemDesktop
 
         private void buttonRent_Click(object sender, EventArgs e)
         {
-            BikeRentalForm rentalForm = new BikeRentalForm(bikeService, vendorService, typeService, clientService, rentalService,terrainService);
+            BikeRentalForm rentalForm = new BikeRentalForm(bikeService, vendorService, typeService, clientService, rentalService, terrainService);
             rentalForm.Owner = this;
             rentalForm.OnSubmit += () =>
             {
@@ -443,6 +443,20 @@ namespace BikeManagementSystemDesktop
             }
             else
                 GuiUtils.ShowError(this, "You need to select bike type first");
+        }
+
+        private void buttonMaintenanceHistory_Click(object sender, EventArgs e)
+        {
+            if (BikeTable.SelectedRows.Count != 0)
+            {
+                long selectedBikeID = (long)BikeTable.SelectedRows[0].Cells[0].Value;
+                Bike toShow = bikeService.GetEntity(selectedBikeID);
+                MaintenanceHistoryForm maintenanceHistory = new MaintenanceHistoryForm(toShow);
+                maintenanceHistory.Owner=this;
+                maintenanceHistory.ShowDialog();
+            }
+            else
+                GuiUtils.ShowError(this, "You need to select bike first");
         }
     }
 }
