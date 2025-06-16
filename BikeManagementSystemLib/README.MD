@@ -11,3 +11,6 @@ Shared library for BikeManagementSystem. Written in C#, uses EntityFrameworkCore
 
 ### Services
 ![LibServices](https://github.com/ArtiFixal/BikeManagementSystem/blob/docs/docs/image/libServicesUML.png?raw=true)
+
+### Database
+![Database diagram](https://github.com/ArtiFixal/BikeManagementSystem/blob/docs/docs/image/dbDiagram.jpg?raw=true)
